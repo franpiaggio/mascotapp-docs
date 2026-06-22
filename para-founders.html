@@ -179,8 +179,9 @@ footer a:hover{text-decoration:underline}
     <a href="#que-es-que"><span class="n">1</span><span><span class="t">Prototipos vs. app real</span><small>qué es una maqueta y qué es el producto que funciona</small></span><span class="arrow">↓</span></a>
     <a href="#instalar"><span class="n">2</span><span><span class="t">Qué instalás vos, qué le pedís a Claude</span><small>2 programas a mano · el resto, con un mensaje</small></span><span class="arrow">↓</span></a>
     <a href="#levantar"><span class="n">3</span><span><span class="t">Levantar la app — paso a paso</span><small>de cero a la app abierta en el navegador</small></span><span class="arrow">↓</span></a>
-    <a href="#prototipos"><span class="n">4</span><span><span class="t">Los prototipos — índice</span><small>landing, doc de validación y la demo (3 estilos)</small></span><span class="arrow">↓</span></a>
-    <a href="#feature"><span class="n">5</span><span><span class="t">De la idea a la funcionalidad</span><small>PRD corto → elegir modelo → Claude la construye</small></span><span class="arrow">↓</span></a>
+    <a href="#compartir"><span class="n">4</span><span><span class="t">Mostrarla a otra persona (túnel)</span><small>link público temporal, sin deploy — tipo ngrok</small></span><span class="arrow">↓</span></a>
+    <a href="#prototipos"><span class="n">5</span><span><span class="t">Los prototipos — índice</span><small>landing, doc de validación y la demo (3 estilos)</small></span><span class="arrow">↓</span></a>
+    <a href="#feature"><span class="n">6</span><span><span class="t">De la idea a la funcionalidad</span><small>PRD corto → elegir modelo → Claude la construye</small></span><span class="arrow">↓</span></a>
   </div>
 </header>
 
@@ -297,9 +298,61 @@ footer a:hover{text-decoration:underline}
 </section>
 
 <!-- ── 4 ── -->
+<section id="compartir" class="reveal">
+  <div class="sec-head"><span class="idx">04</span><h2>Mostrarla a otra persona (túnel)</h2></div>
+  <p>
+    Mientras corre en tu compu, la app vive en <code>localhost</code>: solo vos la ves. Un
+    <strong>túnel</strong> crea un <strong>link público temporal</strong> para que otra persona —un
+    cliente, un inversor— la abra desde su celular o su compu, <strong>sin deployar nada</strong>.
+  </p>
+
+  <p>
+    Lo más simple y sin cuenta es <strong>Cloudflare Tunnel</strong>: un comando y te da un link
+    <code>https://…trycloudflare.com</code>. Pero como la app son dos piezas (la web y su API), lo
+    más práctico es pedírselo a Claude, que arma el túnel y deja todo conectado:
+  </p>
+
+  <div class="ask">
+    <div class="head">💬 Pegale esto a Claude</div>
+    <div class="body">
+      <p class="quote">
+        Exponé MascotApp con un túnel público temporal (tipo Cloudflare) para que pueda
+        mostrársela a alguien de afuera, y pasame el link. Asegurate de que la API también
+        funcione a través del túnel.
+      </p>
+      <button
+        class="copy-btn"
+        data-copy="Exponé MascotApp con un túnel público temporal (tipo Cloudflare) para que pueda mostrársela a alguien de afuera, y pasame el link. Asegurate de que la API también funcione a través del túnel."
+      >
+        ⧉ copiar
+      </button>
+    </div>
+  </div>
+
+  <h3 class="lead">Si querés hacerlo a mano</h3>
+  <p>Con la app ya corriendo, en otra terminal:</p>
+  <div class="codeblock">
+    <div class="bar">
+      <span class="fname">terminal · túnel a la web</span>
+      <button class="copy-btn" data-copy="brew install cloudflared && cloudflared tunnel --url http://localhost:5173">⧉ copiar</button>
+    </div>
+    <pre><span class="p">$</span> brew install cloudflared                          <span class="c"># una sola vez</span>
+<span class="p">$</span> cloudflared tunnel --url http://localhost:5173    <span class="c"># te imprime el link público</span></pre>
+  </div>
+
+  <div class="callout tip"><span class="ic">⏳</span>
+    <p>El link es <b>temporal</b>: funciona solo mientras tu compu esté encendida y la app corriendo. No es un deploy — para algo permanente hace falta publicar la app en un servidor.</p>
+  </div>
+  <div class="callout warn"><span class="ic">🔒</span>
+    <p>Mientras el túnel está abierto, <b>cualquiera con el link entra</b>. Usalo para demos con datos de prueba, no con información real, y cerralo cuando termines (<code>Ctrl + C</code> en la terminal).</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<!-- ── 5 ── -->
 <section id="prototipos" class="reveal">
-  <div class="sec-head"><span class="idx">04</span><h2>Los prototipos — índice</h2></div>
-  <p>Esto es lo que hicimos en <strong>la última reunión</strong>: unas demos para explorar la idea. El nombre, las pantallas y todo lo que ves acá salió de ese brainstorming — quedan como <strong>historial</strong> para recordar lo que pensamos, <strong>no son el producto final</strong>. Tocá cualquiera para abrirla en el navegador.</p>
+  <div class="sec-head"><span class="idx">05</span><h2>Los prototipos — índice</h2></div>
+  <p>Esto es lo que hicimos en <strong>la última reunión</strong>: unas demos para explorar la idea. El nombre, las pantallas y todo lo que ves acá salió de ese brainstorming — queda como <strong>historial</strong> para recordar lo que pensamos, <strong>no es el producto final</strong>. Tocá cualquiera para abrirla en el navegador.</p>
 
   <div class="proto-card">
     <div class="top"><span class="ptag">Prototipo</span><h4>Landing — la promesa del producto</h4></div>
@@ -341,9 +394,9 @@ footer a:hover{text-decoration:underline}
   <a class="top" href="#top">↑ volver al índice</a>
 </section>
 
-<!-- ── 5 ── -->
+<!-- ── 6 ── -->
 <section id="feature" class="reveal">
-  <div class="sec-head"><span class="idx">05</span><h2>De la idea a la funcionalidad</h2></div>
+  <div class="sec-head"><span class="idx">06</span><h2>De la idea a la funcionalidad</h2></div>
   <p>Para sumar algo a la app real <strong>no programás</strong>: lo describís en castellano y Claude lo construye. Cuando ya tenés una idea <strong>concreta</strong>, el camino tiene tres momentos: escribir un PRD corto, elegir el modelo adecuado y pedir la construcción.</p>
 
   <h3 class="lead">1 · Primero, un PRD corto</h3>
