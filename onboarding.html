@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MascotApp · Guía de onboarding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700;9..144,900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#FAF5EC;
+  --paper-2:#F3ECDD;
+  --ink:#1C2A22;
+  --ink-soft:#47564C;
+  --ink-faint:#7A8780;
+  --green:#2E5E45;
+  --green-deep:#1E3F2F;
+  --green-tint:#E3EDE5;
+  --amber:#D97B29;
+  --amber-soft:#F7E3CC;
+  --rose:#C04F3A;
+  --code-bg:#15241C;
+  --code-ink:#D9E8DC;
+  --line:#DCD2BE;
+  --radius:14px;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Instrument Sans",sans-serif;
+  --display:"Fraunces",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--ink);
+  line-height:1.65;
+  font-size:16.5px;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(46,94,69,.05), transparent 38%),
+    radial-gradient(circle at 90% 30%, rgba(217,123,41,.06), transparent 40%);
+}
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.35;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='0.05'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--amber-soft);color:var(--ink)}
+
+/* ───── layout ───── */
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr);max-width:1240px;margin:0 auto;gap:0}
+aside{
+  position:sticky;top:0;height:100vh;padding:36px 26px 28px 32px;
+  border-right:1px dashed var(--line);
+  display:flex;flex-direction:column;gap:8px;overflow-y:auto;
+}
+main{padding:0 56px 120px 64px;min-width:0}
+@media (max-width:980px){
+  .shell{grid-template-columns:1fr}
+  aside{position:static;height:auto;border-right:0;border-bottom:1px dashed var(--line)}
+  main{padding:0 22px 90px}
+}
+
+/* ───── sidebar ───── */
+.brand{font-family:var(--display);font-weight:900;font-size:25px;letter-spacing:-.02em;color:var(--green-deep);display:flex;align-items:center;gap:10px}
+.brand .paw{width:30px;height:30px;flex:none}
+.brand small{display:block;font-family:var(--sans);font-weight:500;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--amber)}
+nav{margin-top:26px;display:flex;flex-direction:column;gap:2px}
+nav a{
+  text-decoration:none;color:var(--ink-soft);font-size:14px;font-weight:500;
+  padding:7px 12px;border-radius:9px;display:flex;gap:10px;align-items:baseline;
+  transition:all .18s ease;border-left:2px solid transparent;
+}
+nav a .num{font-family:var(--mono);font-size:11px;color:var(--ink-faint)}
+nav a:hover{background:var(--paper-2);color:var(--ink)}
+nav a.active{background:var(--green-tint);color:var(--green-deep);font-weight:600;border-left-color:var(--green)}
+nav a.active .num{color:var(--amber)}
+.progress-card{
+  margin-top:auto;padding:16px;border:1px solid var(--line);border-radius:var(--radius);
+  background:#fff8;backdrop-filter:blur(4px);
+}
+.progress-card h4{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-faint);font-weight:600;margin-bottom:8px}
+.progress-track{height:8px;background:var(--paper-2);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--amber));border-radius:99px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.progress-label{font-family:var(--mono);font-size:12px;color:var(--ink-soft);margin-top:8px}
+.progress-card button{
+  margin-top:10px;font-size:11.5px;font-family:var(--sans);color:var(--ink-faint);
+  background:none;border:none;cursor:pointer;text-decoration:underline dotted;
+}
+.progress-card button:hover{color:var(--rose)}
+
+/* ───── hero ───── */
+header.hero{padding:88px 0 60px;position:relative}
+.hero .kicker{
+  font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--amber);display:flex;align-items:center;gap:12px;
+}
+.hero .kicker::before{content:"";width:42px;height:1.5px;background:var(--amber)}
+.hero h1{
+  font-family:var(--display);font-weight:900;font-size:clamp(44px,6.4vw,76px);
+  line-height:1.02;letter-spacing:-.03em;color:var(--green-deep);margin:18px 0 6px;
+}
+.hero h1 em{font-style:italic;font-weight:600;color:var(--amber)}
+.hero p.lede{max-width:62ch;font-size:19px;color:var(--ink-soft);margin-top:18px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.chip{
+  font-family:var(--mono);font-size:12.5px;padding:6px 13px;border-radius:99px;
+  border:1px solid var(--line);background:#fff9;color:var(--ink-soft);
+  animation:rise .6s both;
+}
+.chip b{color:var(--green);font-weight:600}
+.chips .chip:nth-child(1){animation-delay:.05s}.chips .chip:nth-child(2){animation-delay:.1s}
+.chips .chip:nth-child(3){animation-delay:.15s}.chips .chip:nth-child(4){animation-delay:.2s}
+.chips .chip:nth-child(5){animation-delay:.25s}.chips .chip:nth-child(6){animation-delay:.3s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hero .paw-bg{position:absolute;right:-10px;top:60px;width:190px;opacity:.07;transform:rotate(14deg);pointer-events:none}
+
+/* ───── sections ───── */
+section{padding:64px 0 8px;border-top:1px dashed var(--line);margin-top:48px}
+section:first-of-type{border-top:0;margin-top:0}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:28px}
+.sec-head .index{
+  font-family:var(--display);font-weight:900;font-size:54px;color:transparent;
+  -webkit-text-stroke:1.5px var(--amber);line-height:1;flex:none;
+}
+.sec-head h2{font-family:var(--display);font-weight:700;font-size:clamp(28px,3.4vw,38px);letter-spacing:-.02em;color:var(--green-deep)}
+h3{font-family:var(--display);font-weight:600;font-size:21px;margin:36px 0 12px;color:var(--ink)}
+p{margin-bottom:14px;color:var(--ink-soft)}
+p strong,li strong{color:var(--ink)}
+section > p, section li{max-width:74ch}
+ul.plain{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+ul.plain li{padding-left:24px;position:relative}
+ul.plain li::before{content:"◆";position:absolute;left:2px;top:1px;font-size:10px;color:var(--amber)}
+code:not(pre code){
+  font-family:var(--mono);font-size:.85em;background:var(--green-tint);color:var(--green-deep);
+  padding:2px 7px;border-radius:6px;white-space:nowrap;
+}
+
+/* ───── cards / grids ───── */
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(265px,1fr));gap:16px;margin:22px 0}
+.card{
+  border:1px solid var(--line);border-radius:var(--radius);padding:22px;background:#fffa;
+  transition:transform .2s ease,box-shadow .2s ease;position:relative;overflow:hidden;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px -18px rgba(30,63,47,.4)}
+.card h4{font-family:var(--display);font-size:18px;font-weight:700;color:var(--green-deep);margin-bottom:8px;display:flex;gap:9px;align-items:center}
+.card p{font-size:14.5px;margin-bottom:0}
+.card .tag{
+  position:absolute;top:14px;right:14px;font-family:var(--mono);font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--amber);
+}
+.card .ico{font-size:19px}
+
+/* model cards */
+.models{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:20px 0}
+.model{
+  border-radius:var(--radius);padding:18px 18px 14px;background:var(--code-bg);color:var(--code-ink);
+  font-family:var(--mono);font-size:13px;line-height:1.8;
+}
+.model h5{font-family:var(--display);font-size:17px;font-weight:700;color:#F0C892;margin-bottom:6px;letter-spacing:.01em}
+.model .f{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed #2c4435;padding:1px 0}
+.model .f span:last-child{color:#8FB89C;font-size:11.5px}
+.model .rel{margin-top:8px;font-size:11px;color:#D98F4E}
+
+/* arch diagram */
+.arch{
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:0;
+  margin:26px 0;font-size:14px;
+}
+.arch .node{
+  border:1.5px solid var(--green);border-radius:var(--radius);padding:18px 16px;background:#fff;
+  text-align:center;position:relative;
+}
+.arch .node h5{font-family:var(--display);font-size:17px;color:var(--green-deep);margin-bottom:4px}
+.arch .node .port{font-family:var(--mono);font-size:11.5px;background:var(--green-tint);color:var(--green-deep);border-radius:6px;padding:2px 8px;display:inline-block;margin-top:8px}
+.arch .node small{display:block;color:var(--ink-faint);font-size:12.5px;line-height:1.5}
+.arch .link{
+  align-self:center;padding:0 6px;text-align:center;color:var(--amber);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;
+}
+.arch .link .arrow{font-size:20px;display:block;line-height:1}
+@media (max-width:760px){
+  .arch{grid-template-columns:1fr}
+  .arch .link .arrow{transform:rotate(90deg);display:inline-block}
+}
+
+/* ───── tables ───── */
+table{width:100%;border-collapse:collapse;margin:18px 0 26px;font-size:14.5px}
+th{
+  text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-faint);font-weight:600;padding:9px 14px;border-bottom:2px solid var(--line);
+}
+td{padding:9px 14px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft)}
+tr:hover td{background:#fff8}
+td code,td .cmd{font-family:var(--mono);font-size:12.8px;color:var(--green-deep);background:var(--green-tint);padding:2px 8px;border-radius:6px;white-space:nowrap}
+.req{font-family:var(--mono);font-size:10.5px;padding:2px 8px;border-radius:99px;letter-spacing:.06em}
+.req.si{background:var(--amber-soft);color:#9A5314}
+.req.no{background:var(--paper-2);color:var(--ink-faint)}
+
+/* ───── code blocks ───── */
+.codeblock{position:relative;margin:18px 0 26px;border-radius:var(--radius);overflow:hidden;box-shadow:0 16px 36px -24px rgba(21,36,28,.55)}
+.codeblock .bar{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--green-deep);padding:9px 16px;
+}
+.codeblock .bar .fname{font-family:var(--mono);font-size:12px;color:#A9C9B2;letter-spacing:.04em}
+.copy-btn{
+  font-family:var(--mono);font-size:11.5px;color:#D9E8DC;background:#ffffff14;border:1px solid #ffffff22;
+  border-radius:7px;padding:4px 12px;cursor:pointer;transition:all .15s;display:flex;gap:6px;align-items:center;
+}
+.copy-btn:hover{background:#ffffff28}
+.copy-btn.ok{background:var(--amber);border-color:var(--amber);color:#fff}
+pre{
+  background:var(--code-bg);color:var(--code-ink);padding:18px 20px;overflow-x:auto;
+  font-family:var(--mono);font-size:13.5px;line-height:1.75;
+}
+pre .c{color:#6E8E79;font-style:italic}
+pre .k{color:#F0C892}
+pre .s{color:#D98F4E}
+pre .p{color:#8FB89C;user-select:none}
+
+/* ───── tabs ───── */
+.tabs{margin:26px 0}
+.tab-row{display:flex;gap:6px;border-bottom:2px solid var(--line)}
+.tab-btn{
+  font-family:var(--sans);font-weight:600;font-size:14.5px;color:var(--ink-faint);
+  background:none;border:none;padding:11px 20px;cursor:pointer;position:relative;
+  border-radius:10px 10px 0 0;transition:color .15s;
+}
+.tab-btn:hover{color:var(--ink);background:var(--paper-2)}
+.tab-btn.active{color:var(--green-deep)}
+.tab-btn.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;background:var(--amber);border-radius:3px}
+.tab-btn .emoji{margin-right:7px}
+.tab-panel{display:none;padding-top:6px;animation:fadeUp .35s both}
+.tab-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ───── steps & checklist ───── */
+.step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin:26px 0;align-items:start}
+.step .n{
+  width:42px;height:42px;border-radius:50%;background:var(--green-deep);color:#F0C892;
+  font-family:var(--display);font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 14px -7px rgba(30,63,47,.6);
+}
+.step h4{font-family:var(--display);font-size:18.5px;font-weight:700;margin:7px 0 6px;color:var(--ink)}
+.step p{font-size:15px}
+.check{
+  display:flex;gap:13px;align-items:flex-start;padding:13px 16px;margin:8px 0;
+  border:1px solid var(--line);border-radius:12px;background:#fffa;cursor:pointer;
+  transition:all .2s ease;user-select:none;
+}
+.check:hover{border-color:var(--green)}
+.check input{appearance:none;width:21px;height:21px;flex:none;margin-top:2px;border:2px solid var(--ink-faint);border-radius:7px;cursor:pointer;position:relative;transition:all .18s;background:#fff}
+.check input:checked{background:var(--green);border-color:var(--green)}
+.check input:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700}
+.check.done{background:var(--green-tint);border-color:var(--green-tint)}
+.check.done .check-text{color:var(--ink-faint);text-decoration:line-through;text-decoration-color:var(--amber)}
+.check-text{font-size:15px;color:var(--ink)}
+.check-text code{font-size:.82em}
+
+/* ───── callouts ───── */
+.callout{
+  display:flex;gap:14px;padding:17px 19px;border-radius:var(--radius);margin:20px 0;font-size:14.5px;
+  border:1px solid;align-items:flex-start;
+}
+.callout .ic{font-size:19px;flex:none;margin-top:1px}
+.callout p{margin:0;font-size:14.5px}
+.callout.tip{background:var(--green-tint);border-color:#BFD6C4}
+.callout.warn{background:var(--amber-soft);border-color:#EBC79C}
+.callout.warn p{color:#7A4814}
+.callout.danger{background:#F7DDD6;border-color:#E3B0A3}
+.callout.danger p{color:#8A3526}
+
+/* credentials */
+.creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:18px 0}
+.cred{
+  border:1.5px dashed var(--amber);border-radius:var(--radius);padding:16px 18px;background:#fff;
+  font-family:var(--mono);font-size:13.5px;
+}
+.cred .role{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.cred div{color:var(--ink-soft)}
+.cred b{color:var(--green-deep);font-weight:600}
+
+/* flow diagram (PR) */
+.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:24px 0;font-family:var(--mono);font-size:13px}
+.flow .fnode{background:#fff;border:1.5px solid var(--green);color:var(--green-deep);border-radius:99px;padding:8px 18px;font-weight:500}
+.flow .fnode.hot{background:var(--green-deep);color:#F0C892;border-color:var(--green-deep)}
+.flow .farrow{color:var(--amber);font-size:17px}
+
+details{border:1px solid var(--line);border-radius:var(--radius);margin:12px 0;background:#fffa;overflow:hidden}
+details summary{
+  cursor:pointer;padding:14px 18px;font-weight:600;font-size:15px;color:var(--green-deep);
+  list-style:none;display:flex;justify-content:space-between;align-items:center;
+}
+details summary::after{content:"+";font-family:var(--mono);font-size:18px;color:var(--amber);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details .body{padding:2px 18px 16px}
+details .body p{font-size:14.5px}
+
+footer{margin-top:90px;padding-top:26px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--ink-faint);font-size:13px;font-family:var(--mono)}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ════════ SIDEBAR ════════ -->
+<aside>
+  <div class="brand">
+    <svg class="paw" viewBox="0 0 64 64" fill="none"><g fill="#2E5E45"><ellipse cx="20" cy="18" rx="7" ry="9" transform="rotate(-18 20 18)"/><ellipse cx="44" cy="18" rx="7" ry="9" transform="rotate(18 44 18)"/><ellipse cx="9" cy="34" rx="6" ry="8" transform="rotate(-38 9 34)"/><ellipse cx="55" cy="34" rx="6" ry="8" transform="rotate(38 55 34)"/><path d="M32 28c9 0 17 8 17 16 0 7-6 11-17 11S15 51 15 44c0-8 8-16 17-16z" fill="#D97B29"/></g></svg>
+    <div>MascotApp<small>Guía del desarrollador</small></div>
+  </div>
+  <nav id="nav">
+    <a href="#que-es"><span class="num">01</span>¿Qué es?</a>
+    <a href="#arquitectura"><span class="num">02</span>Arquitectura</a>
+    <a href="#configuracion"><span class="num">03</span>Configuración</a>
+    <a href="#primeros-pasos"><span class="num">04</span>Primeros pasos</a>
+    <a href="#scripts"><span class="num">05</span>Scripts</a>
+    <a href="#features"><span class="num">06</span>Crear una feature</a>
+    <a href="#prs"><span class="num">07</span>Crear un PR</a>
+  </nav>
+  <div class="progress-card">
+    <h4>Tu progreso de setup</h4>
+    <div class="progress-track"><div class="progress-fill" id="pfill"></div></div>
+    <div class="progress-label" id="plabel">0 / 0 pasos</div>
+    <button id="preset">Reiniciar checklist</button>
+  </div>
+</aside>
+
+<!-- ════════ MAIN ════════ -->
+<main>
+
+<header class="hero">
+  <svg class="paw-bg" viewBox="0 0 64 64" fill="#1E3F2F"><ellipse cx="20" cy="18" rx="7" ry="9" transform="rotate(-18 20 18)"/><ellipse cx="44" cy="18" rx="7" ry="9" transform="rotate(18 44 18)"/><ellipse cx="9" cy="34" rx="6" ry="8" transform="rotate(-38 9 34)"/><ellipse cx="55" cy="34" rx="6" ry="8" transform="rotate(38 55 34)"/><path d="M32 28c9 0 17 8 17 16 0 7-6 11-17 11S15 51 15 44c0-8 8-16 17-16z"/></svg>
+  <div class="kicker">Manual de a bordo · v0.1.0</div>
+  <h1>Historia clínica<br/>veterinaria, <em>bien hecha</em>.</h1>
+  <p class="lede">
+    Todo lo que necesitás para levantar <strong>MascotApp</strong> en tu máquina, entender cómo está
+    armado el monorepo y mandar tu primer PR sin pedir ayuda en el camino.
+  </p>
+  <div class="chips">
+    <chip class="chip"><b>NestJS 10</b> + Prisma 5</chip>
+    <chip class="chip"><b>React 18</b> + Vite 5</chip>
+    <chip class="chip">PostgreSQL <b>16</b></chip>
+    <chip class="chip">shadcn/ui + Tailwind</chip>
+    <chip class="chip">Node <b>≥ 20</b></chip>
+    <chip class="chip">npm workspaces</chip>
+  </div>
+</header>
+
+<!-- ── 01 ─────────────────────────── -->
+<section id="que-es" class="reveal">
+  <div class="sec-head"><div class="index">01</div><h2>¿Qué hace este proyecto?</h2></div>
+  <p>
+    <strong>MascotApp</strong> es una plataforma de <strong>historia clínica veterinaria</strong>:
+    un sistema donde una clínica registra tutores (dueños), sus mascotas y cada visita médica
+    con diagnóstico y tratamiento. Hay dos roles de usuario: <code>ADMIN</code> y <code>VET</code>,
+    con autenticación JWT (access token de 15 min + refresh de 7 días).
+  </p>
+  <p>El dominio gira alrededor de cuatro modelos de Prisma:</p>
+
+  <div class="models">
+    <div class="model">
+      <h5>User</h5>
+      <div class="f"><span>email</span><span>unique</span></div>
+      <div class="f"><span>passwordHash</span><span>bcrypt·12</span></div>
+      <div class="f"><span>role</span><span>ADMIN|VET</span></div>
+      <div class="f"><span>isActive</span><span>bool</span></div>
+      <div class="rel">→ atiende Visits</div>
+    </div>
+    <div class="model">
+      <h5>Tutor</h5>
+      <div class="f"><span>fullName</span><span>string</span></div>
+      <div class="f"><span>email</span><span>unique?</span></div>
+      <div class="f"><span>phone / address</span><span>string?</span></div>
+      <div class="rel">→ tiene Pets</div>
+    </div>
+    <div class="model">
+      <h5>Pet</h5>
+      <div class="f"><span>name</span><span>string</span></div>
+      <div class="f"><span>species</span><span>DOG|CAT|OTHER</span></div>
+      <div class="f"><span>sex</span><span>M|F|UNKNOWN</span></div>
+      <div class="f"><span>weightKg</span><span>decimal?</span></div>
+      <div class="rel">→ pertenece a Tutor · tiene Visits</div>
+    </div>
+    <div class="model">
+      <h5>Visit</h5>
+      <div class="f"><span>visitedAt</span><span>datetime</span></div>
+      <div class="f"><span>reason</span><span>string</span></div>
+      <div class="f"><span>diagnosis</span><span>string?</span></div>
+      <div class="f"><span>treatment</span><span>string?</span></div>
+      <div class="rel">→ de una Pet, atendida por un User</div>
+    </div>
+  </div>
+
+  <div class="callout tip"><span class="ic">🩺</span>
+    <p>La API expone documentación <strong>Swagger en <code>/docs</code></strong> (solo en desarrollo)
+    y un health-check en <code>/health</code>. Todos los demás endpoints viven bajo el prefijo <code>/api</code>.</p>
+  </div>
+</section>
+
+<!-- ── 02 ─────────────────────────── -->
+<section id="arquitectura" class="reveal">
+  <div class="sec-head"><div class="index">02</div><h2>Arquitectura del monorepo</h2></div>
+  <p>Es un monorepo con <strong>npm workspaces</strong>: dos aplicaciones bajo <code>apps/</code> que se desarrollan, testean y deployan juntas.</p>
+
+  <div class="arch">
+    <div class="node">
+      <h5>apps/web</h5>
+      <small>React 18 · Vite · shadcn/ui<br/>React Query · React Router</small>
+      <span class="port">:5173</span>
+    </div>
+    <div class="link"><span class="arrow">⟶</span>HTTP · JWT</div>
+    <div class="node">
+      <h5>apps/api</h5>
+      <small>NestJS 10 · Passport JWT<br/>Helmet · Throttler · Zod env</small>
+      <span class="port">:3001 /api</span>
+    </div>
+    <div class="link"><span class="arrow">⟶</span>Prisma 5</div>
+    <div class="node">
+      <h5>PostgreSQL 16</h5>
+      <small>Docker · postgres:16-alpine<br/>migraciones + seed</small>
+      <span class="port">:5432</span>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card"><span class="tag">backend</span>
+      <h4><span class="ico">🦴</span>apps/api</h4>
+      <p>Módulos por dominio (<code>auth</code>, <code>users</code>, <code>tutors</code>, <code>pets</code>, <code>visits</code>) + <code>common/</code> con guards, filtros y pipes globales. Validación de env con Zod al arrancar: si falta una variable, <strong>no inicia</strong>. Tests con Jest.</p>
+    </div>
+    <div class="card"><span class="tag">frontend</span>
+      <h4><span class="ico">🐈</span>apps/web</h4>
+      <p>Organización por <strong>features</strong> (<code>features/auth</code>, <code>features/dashboard</code>), primitivas shadcn/ui en <code>components/ui</code>, tema con CSS variables en <code>theme/tokens.css</code>. Tests con Vitest + Playwright para e2e.</p>
+    </div>
+    <div class="card"><span class="tag">seguridad</span>
+      <h4><span class="ico">🔐</span>Auth & guards</h4>
+      <p>JWT HS256 con <code>JwtAuthGuard</code> global — los endpoints públicos se marcan con <code>@Public()</code>. Autorización por rol con <code>@Roles()</code> + <code>RolesGuard</code>. Rate limit: 100 req/60s.</p>
+    </div>
+    <div class="card"><span class="tag">infra</span>
+      <h4><span class="ico">🐳</span>Docker</h4>
+      <p>Builds multi-stage (<code>node:20-alpine</code>; el web se sirve con nginx). <code>docker-compose.yml</code> levanta db + api + web, y corre <code>prisma migrate deploy</code> automáticamente antes de iniciar la API.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── 03 ─────────────────────────── -->
+<section id="configuracion" class="reveal">
+  <div class="sec-head"><div class="index">03</div><h2>Configuración requerida</h2></div>
+
+  <h3>Requisitos previos</h3>
+  <ul class="plain">
+    <li><strong>Node ≥ 20</strong> — hay un <code>.nvmrc</code>, así que alcanza con <code>nvm use</code>.</li>
+    <li><strong>npm</strong> — el monorepo usa npm workspaces (no pnpm ni yarn).</li>
+    <li><strong>Docker + Docker Compose</strong> — al menos para PostgreSQL.</li>
+  </ul>
+
+  <h3>Archivos .env</h3>
+  <p>Hay <strong>tres</strong> archivos <code>.env.example</code> que copiar. El de la raíz alimenta a docker-compose; los de cada app se usan para desarrollo local:</p>
+
+  <div class="codeblock">
+    <div class="bar"><span class="fname">terminal — copiar los tres .env</span><button class="copy-btn" data-copy="cp .env.example .env && cp apps/api/.env.example apps/api/.env && cp apps/web/.env.example apps/web/.env">⧉ copiar</button></div>
+    <pre><span class="p">$</span> cp .env.example .env
+<span class="p">$</span> cp apps/api/.env.example apps/api/.env
+<span class="p">$</span> cp apps/web/.env.example apps/web/.env</pre>
+  </div>
+
+  <h3>Variables que importan</h3>
+  <table>
+    <thead><tr><th>Variable</th><th>Para qué sirve</th><th>Default dev</th><th>Obligatoria</th></tr></thead>
+    <tbody>
+      <tr><td><code>DATABASE_URL</code></td><td>Conexión de Prisma a Postgres (en <code>apps/api/.env</code>)</td><td>localhost:5432 / mascotapp</td><td><span class="req si">sí</span></td></tr>
+      <tr><td><code>JWT_SECRET</code></td><td>Firma de tokens. <strong>Mínimo 32 caracteres</strong> — Zod lo valida al boot</td><td>— (generala vos)</td><td><span class="req si">sí</span></td></tr>
+      <tr><td><code>API_PORT</code></td><td>Puerto de la API</td><td>3001</td><td><span class="req si">sí</span></td></tr>
+      <tr><td><code>CORS_ORIGIN</code></td><td>Origen permitido para el frontend</td><td>http://localhost:5173</td><td><span class="req no">opcional</span></td></tr>
+      <tr><td><code>VITE_API_URL</code></td><td>URL de la API que usa el web (en <code>apps/web/.env</code>)</td><td>http://localhost:3001</td><td><span class="req si">sí</span></td></tr>
+      <tr><td><code>JWT_EXPIRES_IN</code> / <code>JWT_REFRESH_EXPIRES_IN</code></td><td>Vida de access/refresh token</td><td>15m / 7d</td><td><span class="req no">opcional</span></td></tr>
+      <tr><td><code>THROTTLE_ENABLED</code></td><td>Activa el rate limiting (poné <code>false</code> si te molesta en local)</td><td>true</td><td><span class="req no">opcional</span></td></tr>
+      <tr><td><code>POSTGRES_USER/PASSWORD/DB</code></td><td>Credenciales del contenedor de Postgres (raíz)</td><td>mascotapp / changeme…</td><td><span class="req si">sí</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="codeblock">
+    <div class="bar"><span class="fname">generar un JWT_SECRET válido</span><button class="copy-btn" data-copy="openssl rand -base64 48">⧉ copiar</button></div>
+    <pre><span class="p">$</span> openssl rand -base64 48</pre>
+  </div>
+
+  <div class="callout warn"><span class="ic">⚠️</span>
+    <p>Si la API <strong>no arranca</strong>, lo primero que hay que mirar es la validación de entorno
+    (<code>apps/api/src/config/env.ts</code>): un <code>JWT_SECRET</code> corto o un <code>DATABASE_URL</code>
+    mal formado hacen que el proceso se niegue a iniciar, con el error de Zod en consola.</p>
+  </div>
+</section>
+
+<!-- ── 04 ─────────────────────────── -->
+<section id="primeros-pasos" class="reveal">
+  <div class="sec-head"><div class="index">04</div><h2>Primeros pasos</h2></div>
+  <p>Elegí tu camino. Los checkboxes guardan tu progreso en este navegador (mirá la barra del costado).</p>
+
+  <div class="tabs" id="setup-tabs">
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="t-docker"><span class="emoji">🐳</span>Todo con Docker</button>
+      <button class="tab-btn" data-tab="t-local"><span class="emoji">⚡</span>Dev local (recomendado)</button>
+    </div>
+
+    <!-- Docker -->
+    <div class="tab-panel active" id="t-docker">
+      <p>La forma más rápida de ver la app viva: un solo comando levanta base, API (con migraciones automáticas) y web.</p>
+      <label class="check" data-key="d1"><input type="checkbox"/><span class="check-text">Copiar el env de la raíz: <code>cp .env.example .env</code> y setear un <code>JWT_SECRET</code> de 32+ caracteres</span></label>
+      <label class="check" data-key="d2"><input type="checkbox"/><span class="check-text">Levantar todo: <code>npm run docker:up</code></span></label>
+      <label class="check" data-key="d3"><input type="checkbox"/><span class="check-text">Verificar: web en <code>http://localhost:5173</code>, API en <code>http://localhost:3001/health</code>, Swagger en <code>/docs</code></span></label>
+      <div class="codeblock">
+        <div class="bar"><span class="fname">quick start</span><button class="copy-btn" data-copy="cp .env.example .env && npm run docker:up">⧉ copiar</button></div>
+        <pre><span class="p">$</span> cp .env.example .env   <span class="c"># editá JWT_SECRET antes de seguir</span>
+<span class="p">$</span> npm run docker:up</pre>
+      </div>
+    </div>
+
+    <!-- Local -->
+    <div class="tab-panel" id="t-local">
+      <p>Para desarrollar día a día: solo la base corre en Docker; API y web corren con hot-reload en tu máquina.</p>
+
+      <div class="step"><div class="n">1</div><div>
+        <h4>Instalar dependencias</h4>
+        <label class="check" data-key="l1"><input type="checkbox"/><span class="check-text"><code>nvm use</code> (Node 20) y <code>npm install</code> desde la raíz — workspaces instala todo</span></label>
+      </div></div>
+
+      <div class="step"><div class="n">2</div><div>
+        <h4>Levantar PostgreSQL</h4>
+        <label class="check" data-key="l2"><input type="checkbox"/><span class="check-text"><code>npm run docker:db</code> — solo el contenedor de Postgres 16</span></label>
+      </div></div>
+
+      <div class="step"><div class="n">3</div><div>
+        <h4>Preparar la base (desde <code>apps/api</code>)</h4>
+        <label class="check" data-key="l3"><input type="checkbox"/><span class="check-text">Copiar <code>.env.example</code> → <code>.env</code> y completar <code>JWT_SECRET</code></span></label>
+        <label class="check" data-key="l4"><input type="checkbox"/><span class="check-text"><code>npm run prisma:generate</code> + <code>npm run prisma:migrate</code> + <code>npm run prisma:seed</code></span></label>
+        <div class="codeblock">
+          <div class="bar"><span class="fname">apps/api</span><button class="copy-btn" data-copy="cd apps/api && cp .env.example .env && npm run prisma:generate && npm run prisma:migrate && npm run prisma:seed">⧉ copiar</button></div>
+          <pre><span class="p">$</span> cd apps/api
+<span class="p">$</span> cp .env.example .env
+<span class="p">$</span> npm run prisma:generate
+<span class="p">$</span> npm run prisma:migrate
+<span class="p">$</span> npm run prisma:seed     <span class="c"># crea usuarios demo + datos de prueba</span></pre>
+        </div>
+      </div></div>
+
+      <div class="step"><div class="n">4</div><div>
+        <h4>Levantar API + Web</h4>
+        <label class="check" data-key="l5"><input type="checkbox"/><span class="check-text">Copiar <code>apps/web/.env.example</code> → <code>apps/web/.env</code></span></label>
+        <label class="check" data-key="l6"><input type="checkbox"/><span class="check-text">Desde la raíz: <code>npm run dev</code> (corre ambas apps en paralelo)</span></label>
+        <label class="check" data-key="l7"><input type="checkbox"/><span class="check-text">Loguearte en <code>http://localhost:5173</code> con un usuario seed 👇</span></label>
+      </div></div>
+    </div>
+  </div>
+
+  <h3>Usuarios seed (solo desarrollo)</h3>
+  <div class="creds">
+    <div class="cred"><div class="role">👑 Admin</div><div><b>admin@mascotapp.local</b></div><div>Admin123!</div></div>
+    <div class="cred"><div class="role">🩺 Veterinario</div><div><b>vet@mascotapp.local</b></div><div>Vet12345!</div></div>
+  </div>
+  <p style="font-size:13.5px">El seed también crea un tutor de ejemplo (Juan Pérez), una mascota (Firulais 🐶) y una visita, así el dashboard no arranca vacío.</p>
+</section>
+
+<!-- ── 05 ─────────────────────────── -->
+<section id="scripts" class="reveal">
+  <div class="sec-head"><div class="index">05</div><h2>Scripts disponibles</h2></div>
+  <p>Los del día a día, desde la <strong>raíz</strong> del repo:</p>
+  <table>
+    <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td><span class="cmd">npm run dev</span></td><td>API + Web en paralelo, con hot-reload</td></tr>
+      <tr><td><span class="cmd">npm run dev:api</span> / <span class="cmd">dev:web</span></td><td>Una sola app</td></tr>
+      <tr><td><span class="cmd">npm run lint</span></td><td>ESLint en ambas apps — <strong>0 warnings permitidos</strong></td></tr>
+      <tr><td><span class="cmd">npm run typecheck</span></td><td><code>tsc --noEmit</code> en ambas apps</td></tr>
+      <tr><td><span class="cmd">npm run test</span></td><td>Unit tests: Jest (api) + Vitest (web)</td></tr>
+      <tr><td><span class="cmd">npm run test:e2e</span></td><td>Playwright (flujo de login)</td></tr>
+      <tr><td><span class="cmd">npm run format</span></td><td>Prettier sobre TS, JSON, YAML y Markdown</td></tr>
+      <tr><td><span class="cmd">npm run build</span></td><td>Build de producción de ambas apps</td></tr>
+      <tr><td><span class="cmd">npm run docker:up</span> / <span class="cmd">docker:down</span> / <span class="cmd">docker:db</span></td><td>Compose completo / bajar / solo Postgres</td></tr>
+    </tbody>
+  </table>
+
+  <details>
+    <summary>Scripts específicos de la API (Prisma incluido)</summary>
+    <div class="body">
+      <table>
+        <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><span class="cmd">prisma:generate</span></td><td>Regenera el cliente de Prisma (correr tras tocar <code>schema.prisma</code>)</td></tr>
+          <tr><td><span class="cmd">prisma:migrate</span></td><td>Crea y aplica una migración en dev (interactivo)</td></tr>
+          <tr><td><span class="cmd">prisma:deploy</span></td><td>Aplica migraciones existentes (producción / CI)</td></tr>
+          <tr><td><span class="cmd">prisma:seed</span></td><td>Carga datos demo</td></tr>
+          <tr><td><span class="cmd">prisma:studio</span></td><td>GUI para explorar la base 🔍</td></tr>
+          <tr><td><span class="cmd">test:watch</span> / <span class="cmd">test:cov</span></td><td>Jest en modo watch / con coverage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>Scripts específicos del Web</summary>
+    <div class="body">
+      <table>
+        <thead><tr><th>Comando</th><th>Qué hace</th></tr></thead>
+        <tbody>
+          <tr><td><span class="cmd">preview</span></td><td>Sirve el build de producción localmente</td></tr>
+          <tr><td><span class="cmd">test:e2e:ui</span></td><td>Playwright en modo UI (debug visual)</td></tr>
+          <tr><td><span class="cmd">playwright:install</span></td><td>Instala los browsers de Playwright (primera vez)</td></tr>
+          <tr><td><span class="cmd">test:watch</span> / <span class="cmd">test:cov</span></td><td>Vitest watch / coverage</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<!-- ── 06 ─────────────────────────── -->
+<section id="features" class="reveal">
+  <div class="sec-head"><div class="index">06</div><h2>Cómo crear una feature</h2></div>
+
+  <div class="step"><div class="n">1</div><div>
+    <h4>Partí de <code>master</code> actualizado y creá tu rama</h4>
+    <p>Convención sugerida (no hay una documentada todavía): <code>feat/</code>, <code>fix/</code>, <code>chore/</code> + descripción corta en kebab-case.</p>
+    <div class="codeblock">
+      <div class="bar"><span class="fname">terminal</span><button class="copy-btn" data-copy="git checkout master && git pull && git checkout -b feat/mi-feature">⧉ copiar</button></div>
+      <pre><span class="p">$</span> git checkout master <span class="p">&&</span> git pull
+<span class="p">$</span> git checkout -b <span class="s">feat/mi-feature</span></pre>
+    </div>
+  </div></div>
+
+  <div class="step"><div class="n">2</div><div>
+    <h4>Backend: seguí el patrón de los módulos existentes</h4>
+    <p>Cada dominio es un módulo NestJS autocontenido. Si agregás, por ejemplo, "vacunas":</p>
+    <div class="codeblock">
+      <div class="bar"><span class="fname">apps/api/src/vaccines/</span><button class="copy-btn" data-copy="apps/api/src/vaccines/
+├── vaccines.module.ts
+├── vaccines.controller.ts
+├── vaccines.service.ts
+└── dto/
+    ├── create-vaccine.dto.ts
+    └── update-vaccine.dto.ts">⧉ copiar</button></div>
+      <pre>vaccines/
+├── vaccines.module.ts        <span class="c"># registrarlo en app.module.ts</span>
+├── vaccines.controller.ts    <span class="c"># @Roles() / @Public() según corresponda</span>
+├── vaccines.service.ts       <span class="c"># inyecta PrismaService</span>
+└── dto/                      <span class="c"># class-validator (whitelist estricta)</span></pre>
+    </div>
+    <ul class="plain">
+      <li>¿Tocás el modelo de datos? Editá <code>prisma/schema.prisma</code> → <code>npm run prisma:migrate</code> → <code>npm run prisma:generate</code>. <strong>Commiteá la migración.</strong></li>
+      <li>Los DTOs usan <code>class-validator</code>; el ValidationPipe global rechaza campos no whitelisted.</li>
+      <li>Decorá los endpoints con Swagger (<code>@ApiTags</code>, <code>@ApiOperation</code>) como en los módulos existentes.</li>
+    </ul>
+  </div></div>
+
+  <div class="step"><div class="n">3</div><div>
+    <h4>Frontend: una carpeta por feature</h4>
+    <p>Espejá el patrón de <code>features/auth</code> y <code>features/dashboard</code>:</p>
+    <div class="codeblock">
+      <div class="bar"><span class="fname">apps/web/src/features/vaccines/</span><button class="copy-btn" data-copy="apps/web/src/features/vaccines/
+├── VaccinesPage.tsx
+├── components/
+└── hooks/useVaccines.ts">⧉ copiar</button></div>
+      <pre>features/vaccines/
+├── VaccinesPage.tsx          <span class="c"># registrar la ruta en routes/router.tsx</span>
+├── components/               <span class="c"># componentes propios de la feature</span>
+└── hooks/useVaccines.ts      <span class="c"># React Query contra lib/api</span></pre>
+    </div>
+    <ul class="plain">
+      <li>Usá las primitivas de <code>components/ui</code> (shadcn) en vez de inventar estilos nuevos.</li>
+      <li>Llamadas HTTP a través del cliente de <code>lib/</code> + <strong>React Query</strong>; nada de fetch suelto.</li>
+      <li>Formularios con <code>react-hook-form</code> + <code>zod</code>, como el login.</li>
+      <li>Colores y espaciado salen de <code>theme/tokens.css</code> — no hardcodees hex.</li>
+    </ul>
+  </div></div>
+
+  <div class="step"><div class="n">4</div><div>
+    <h4>Tests + calidad, antes de commitear</h4>
+    <p>No hay CI todavía, así que esta pasada local <strong>es</strong> el gate de calidad:</p>
+    <div class="codeblock">
+      <div class="bar"><span class="fname">el "pre-flight" completo</span><button class="copy-btn" data-copy="npm run lint && npm run typecheck && npm run test">⧉ copiar</button></div>
+      <pre><span class="p">$</span> npm run lint        <span class="c"># 0 warnings o falla</span>
+<span class="p">$</span> npm run typecheck
+<span class="p">$</span> npm run test
+<span class="p">$</span> npm run test:e2e    <span class="c"># si tocaste flujos de UI</span></pre>
+    </div>
+  </div></div>
+
+  <div class="callout tip"><span class="ic">💡</span>
+    <p><strong>Regla de oro:</strong> antes de escribir desde cero, abrí el módulo/feature más parecido
+    (por ejemplo <code>pets</code>) y copiá su estructura. La consistencia entre módulos es deliberada.</p>
+  </div>
+</section>
+
+<!-- ── 07 ─────────────────────────── -->
+<section id="prs" class="reveal">
+  <div class="sec-head"><div class="index">07</div><h2>Cómo crear un PR</h2></div>
+
+  <div class="flow">
+    <span class="fnode">feat/mi-feature</span><span class="farrow">→</span>
+    <span class="fnode">commits convencionales</span><span class="farrow">→</span>
+    <span class="fnode">push</span><span class="farrow">→</span>
+    <span class="fnode hot">PR → master</span><span class="farrow">→</span>
+    <span class="fnode">review & merge</span>
+  </div>
+
+  <h3>Commits: Conventional Commits</h3>
+  <p>El historial ya usa este formato (<code>chore: scaffold MascotApp monorepo…</code>). Mantenelo:</p>
+  <div class="codeblock">
+    <div class="bar"><span class="fname">ejemplos</span><button class="copy-btn" data-copy="feat(api): add vaccines module with CRUD endpoints">⧉ copiar</button></div>
+    <pre><span class="k">feat(api):</span> add vaccines module with CRUD endpoints
+<span class="k">fix(web):</span> handle expired refresh token on dashboard
+<span class="k">chore:</span> bump prisma to 5.21
+<span class="k">test(api):</span> cover visits service edge cases</pre>
+  </div>
+
+  <h3>Abrir el PR con GitHub CLI</h3>
+  <div class="codeblock">
+    <div class="bar"><span class="fname">terminal</span><button class="copy-btn" data-copy='git push -u origin feat/mi-feature && gh pr create --base master --title "feat(api): add vaccines module" --body "## Qué cambia
+- …
+
+## Cómo probar
+1. npm run prisma:migrate
+2. …"'>⧉ copiar</button></div>
+    <pre><span class="p">$</span> git push -u origin feat/mi-feature
+<span class="p">$</span> gh pr create --base master \
+    --title <span class="s">"feat(api): add vaccines module"</span> \
+    --body  <span class="s">"## Qué cambia ... ## Cómo probar ..."</span></pre>
+  </div>
+
+  <h3>Checklist antes de pedir review</h3>
+  <label class="check" data-key="p1"><input type="checkbox"/><span class="check-text"><code>npm run lint && npm run typecheck && npm run test</code> pasan en limpio</span></label>
+  <label class="check" data-key="p2"><input type="checkbox"/><span class="check-text">Si tocaste <code>schema.prisma</code>: la migración está commiteada y el seed sigue funcionando</span></label>
+  <label class="check" data-key="p3"><input type="checkbox"/><span class="check-text">Sin secretos ni <code>.env</code> en el diff (solo <code>.env.example</code> si agregaste variables)</span></label>
+  <label class="check" data-key="p4"><input type="checkbox"/><span class="check-text">Si agregaste variables de entorno: actualizaste los <code>.env.example</code> y <code>config/env.ts</code> (Zod)</span></label>
+  <label class="check" data-key="p5"><input type="checkbox"/><span class="check-text">El PR cuenta <strong>qué cambia</strong> y <strong>cómo probarlo</strong> paso a paso</span></label>
+  <label class="check" data-key="p6"><input type="checkbox"/><span class="check-text">Probaste el flujo a mano con un usuario seed (admin y/o vet según el caso)</span></label>
+
+  <div class="callout danger"><span class="ic">🚨</span>
+    <p><strong>Nunca</strong> pushees directo a <code>master</code> ni commitees credenciales reales.
+    Los usuarios seed y el password de Postgres del compose son <em>solo</em> para desarrollo local.</p>
+  </div>
+
+  <div class="callout warn"><span class="ic">📌</span>
+    <p>Pendientes del repo (buenas primeras contribuciones): no hay <strong>CI/CD</strong> (GitHub Actions),
+    ni <strong>PR template</strong>, ni <strong>CONTRIBUTING.md</strong>, ni hooks de pre-commit activos.</p>
+  </div>
+</section>
+
+<footer>
+  <span>MascotApp · guía de onboarding · generada el 2026-06-10</span>
+  <span>docs/onboarding.html — abrila en cualquier navegador 🐾</span>
+</footer>
+
+</main>
+</div>
+
+<script>
+/* ── checklist con persistencia ── */
+const LS_KEY="mascotapp-onboarding-v1";
+const state=JSON.parse(localStorage.getItem(LS_KEY)||"{}");
+const checks=[...document.querySelectorAll(".check")];
+function syncProgress(){
+  const total=checks.length;
+  const done=checks.filter(c=>c.querySelector("input").checked).length;
+  document.getElementById("pfill").style.width=(total?100*done/total:0)+"%";
+  document.getElementById("plabel").textContent=`${done} / ${total} pasos`;
+}
+checks.forEach(c=>{
+  const input=c.querySelector("input"),key=c.dataset.key;
+  if(state[key]){input.checked=true;c.classList.add("done");}
+  input.addEventListener("change",()=>{
+    c.classList.toggle("done",input.checked);
+    state[key]=input.checked;
+    localStorage.setItem(LS_KEY,JSON.stringify(state));
+    syncProgress();
+  });
+});
+document.getElementById("preset").addEventListener("click",()=>{
+  localStorage.removeItem(LS_KEY);
+  checks.forEach(c=>{c.querySelector("input").checked=false;c.classList.remove("done");});
+  for(const k in state)delete state[k];
+  syncProgress();
+});
+syncProgress();
+
+/* ── copy buttons ── */
+document.querySelectorAll(".copy-btn").forEach(btn=>{
+  btn.addEventListener("click",async()=>{
+    try{await navigator.clipboard.writeText(btn.dataset.copy);}
+    catch(e){
+      const ta=document.createElement("textarea");ta.value=btn.dataset.copy;
+      document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();
+    }
+    const prev=btn.textContent;btn.textContent="✓ copiado";btn.classList.add("ok");
+    setTimeout(()=>{btn.textContent=prev;btn.classList.remove("ok");},1600);
+  });
+});
+
+/* ── tabs ── */
+document.querySelectorAll(".tabs").forEach(tabs=>{
+  tabs.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      tabs.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      tabs.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      tabs.querySelector("#"+btn.dataset.tab).classList.add("active");
+    });
+  });
+});
+
+/* ── scrollspy ── */
+const links=[...document.querySelectorAll("#nav a")];
+const sections=links.map(a=>document.querySelector(a.getAttribute("href")));
+const spy=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle("active",l.getAttribute("href")==="#"+e.target.id));
+    }
+  });
+},{rootMargin:"-25% 0px -65% 0px"});
+sections.forEach(s=>s&&spy.observe(s));
+
+/* ── reveal on scroll ── */
+const rev=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rev.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll(".reveal").forEach(el=>rev.observe(el));
+</script>
+</body>
+</html>

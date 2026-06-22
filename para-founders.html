@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MascotApp · Guía para founders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#FAF5EC; --paper-2:#F3ECDD;
+  --ink:#1C2A22; --ink-soft:#47564C; --ink-faint:#7A8780;
+  --green:#2E5E45; --green-deep:#1E3F2F; --green-tint:#E3EDE5;
+  --amber:#D97B29; --amber-soft:#F7E3CC;
+  --code-bg:#15241C; --code-ink:#D9E8DC;
+  --line:#DCD2BE; --radius:14px;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Instrument Sans",sans-serif;
+  --display:"Fraunces",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--paper);color:var(--ink);
+  line-height:1.65;font-size:16.5px;
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(46,94,69,.05), transparent 35%),
+    radial-gradient(circle at 95% 20%, rgba(217,123,41,.06), transparent 38%);
+}
+::selection{background:var(--amber-soft)}
+.wrap{max-width:820px;margin:0 auto;padding:0 24px 110px}
+
+/* hero */
+header{padding:70px 0 30px;text-align:left}
+.kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:38px;height:1.5px;background:var(--amber)}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(38px,6vw,58px);letter-spacing:-.03em;line-height:1.04;color:var(--green-deep);margin:14px 0 12px}
+h1 em{font-style:italic;font-weight:600;color:var(--amber)}
+.lede{color:var(--ink-soft);font-size:18px;max-width:58ch}
+
+/* index navegable */
+.toc{
+  margin:34px 0 10px;border:1.5px solid var(--green);border-radius:var(--radius);
+  background:#fffb;overflow:hidden;
+}
+.toc h2{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;padding:14px 22px 0}
+.toc a{
+  display:flex;align-items:center;gap:16px;padding:15px 22px;text-decoration:none;color:var(--ink);
+  border-bottom:1px dashed var(--line);transition:background .15s,padding-left .2s;
+}
+.toc a:last-child{border-bottom:0}
+.toc a:hover{background:var(--green-tint);padding-left:30px}
+.toc .n{
+  font-family:var(--display);font-weight:700;font-size:17px;color:#F0C892;background:var(--green-deep);
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;
+}
+.toc .t{font-weight:600;font-size:16px}
+.toc small{display:block;font-weight:400;font-size:13px;color:var(--ink-faint)}
+.toc .arrow{margin-left:auto;color:var(--amber);font-family:var(--mono)}
+
+/* secciones */
+section{padding-top:64px}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px;border-top:1px dashed var(--line);padding-top:42px}
+.sec-head .idx{font-family:var(--display);font-weight:900;font-size:44px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--amber)}
+.sec-head h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3.4vw,32px);letter-spacing:-.02em;color:var(--green-deep)}
+h3.lead{font-family:var(--display);font-weight:700;font-size:19px;color:var(--green-deep);margin:26px 0 10px}
+p{color:var(--ink-soft);margin-bottom:14px}
+p strong,li strong{color:var(--ink)}
+code:not(pre code){font-family:var(--mono);font-size:.85em;background:var(--green-tint);color:var(--green-deep);padding:2px 7px;border-radius:6px;white-space:nowrap}
+ul.plain{list-style:none;margin:0 0 16px;display:flex;flex-direction:column;gap:7px}
+ul.plain li{padding-left:22px;position:relative;color:var(--ink-soft);font-size:15px}
+ul.plain li::before{content:"◆";position:absolute;left:1px;top:1px;font-size:9px;color:var(--amber)}
+
+/* numbered steps */
+ol.steps{list-style:none;counter-reset:s;margin:8px 0 18px;display:flex;flex-direction:column;gap:14px}
+ol.steps li{counter-increment:s;position:relative;padding-left:46px;color:var(--ink-soft)}
+ol.steps li::before{
+  content:counter(s);position:absolute;left:0;top:-2px;width:30px;height:30px;border-radius:50%;
+  background:var(--green-deep);color:#F0C892;font-family:var(--display);font-weight:700;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+}
+ol.steps li b{color:var(--ink)}
+
+/* code / prompt blocks */
+.codeblock{position:relative;margin:14px 0 22px;border-radius:var(--radius);overflow:hidden;box-shadow:0 14px 30px -22px rgba(21,36,28,.55)}
+.codeblock .bar{display:flex;align-items:center;justify-content:space-between;background:var(--green-deep);padding:8px 15px}
+.codeblock .fname{font-family:var(--mono);font-size:11.5px;color:#A9C9B2;letter-spacing:.04em}
+.copy-btn{font-family:var(--mono);font-size:11px;color:#D9E8DC;background:#ffffff14;border:1px solid #ffffff22;border-radius:7px;padding:4px 11px;cursor:pointer;transition:all .15s}
+.copy-btn:hover{background:#ffffff28}
+.copy-btn.ok{background:var(--amber);border-color:var(--amber);color:#fff}
+pre{background:var(--code-bg);color:var(--code-ink);padding:16px 19px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.75;white-space:pre-wrap}
+pre .c{color:#6E8E79;font-style:italic}
+pre .s{color:#D98F4E}
+pre .k{color:#F0C892}
+pre .p{color:#8FB89C;user-select:none}
+
+/* "pedile a Claude" prompt card */
+.ask{margin:14px 0 22px;border:1.5px solid var(--green);border-radius:var(--radius);background:#fff;overflow:hidden}
+.ask .head{display:flex;align-items:center;gap:9px;background:var(--green-tint);padding:10px 16px;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green-deep);font-weight:600}
+.ask .body{display:flex;align-items:flex-start;gap:12px;padding:15px 16px}
+.ask .quote{flex:1;font-size:15.5px;color:var(--ink);font-style:italic}
+.ask .copy-btn{flex:none;color:var(--green-deep);background:var(--green-tint);border-color:#BFD6C4}
+.ask .copy-btn:hover{background:#D3E5D8}
+.ask .copy-btn.ok{background:var(--amber);border-color:var(--amber);color:#fff}
+
+/* callouts */
+.callout{display:flex;gap:13px;padding:15px 18px;border-radius:var(--radius);margin:18px 0;border:1px solid;align-items:flex-start}
+.callout .ic{font-size:18px;flex:none}
+.callout p{margin:0;font-size:14.5px}
+.callout.tip{background:var(--green-tint);border-color:#BFD6C4}
+.callout.warn{background:var(--amber-soft);border-color:#EBC79C}
+.callout.warn p{color:#7A4814}
+
+/* compare: prototipo vs app */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0}
+.compare .col{border-radius:var(--radius);padding:20px;background:#fff;border:1.5px solid}
+.compare .proto{border-color:var(--amber)}
+.compare .real{border-color:var(--green)}
+.compare .badge{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:10px;font-weight:600}
+.compare .proto .badge{background:var(--amber-soft);color:#7A4814}
+.compare .real .badge{background:var(--green-tint);color:var(--green-deep)}
+.compare h4{font-family:var(--display);font-size:18px;font-weight:700;color:var(--green-deep);margin-bottom:8px}
+.compare ul{list-style:none;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink-soft)}
+.compare li{padding-left:18px;position:relative}
+.compare .proto li::before{content:"○";position:absolute;left:0;color:var(--amber)}
+.compare .real li::before{content:"●";position:absolute;left:0;color:var(--green)}
+
+/* prototype index cards */
+.proto-card{border:1.5px solid var(--line);border-radius:var(--radius);background:#fff;padding:18px 20px;margin:14px 0}
+.proto-card .top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.proto-card .ptag{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;background:var(--amber-soft);color:#7A4814;padding:3px 9px;border-radius:99px;font-weight:600}
+.proto-card h4{font-family:var(--display);font-size:18px;font-weight:700;color:var(--green-deep)}
+.proto-card p{font-size:14px;margin-bottom:10px}
+.screens{display:flex;flex-wrap:wrap;gap:8px}
+.screens a{display:inline-flex;align-items:center;gap:7px;text-decoration:none;font-size:13px;font-weight:600;color:var(--green-deep);
+  background:var(--green-tint);border:1px solid #BFD6C4;border-radius:99px;padding:6px 13px;transition:all .15s}
+.screens a:hover{background:var(--green-deep);color:#F0C892;border-color:var(--green-deep)}
+.screens a small{font-weight:400;font-family:var(--mono);font-size:11px;opacity:.75}
+
+/* credenciales */
+.creds{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.cred{border:1.5px dashed var(--amber);border-radius:12px;padding:12px 16px;background:#fff;font-family:var(--mono);font-size:13px;flex:1;min-width:230px}
+.cred .role{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.cred b{color:var(--green-deep);font-weight:600}
+
+/* tabs */
+.tabs{margin:18px 0}
+.tab-row{display:flex;gap:6px;border-bottom:2px solid var(--line);flex-wrap:wrap}
+.tab-btn{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--ink-faint);background:none;border:none;padding:10px 18px;cursor:pointer;position:relative;border-radius:10px 10px 0 0}
+.tab-btn:hover{color:var(--ink);background:var(--paper-2)}
+.tab-btn.active{color:var(--green-deep)}
+.tab-btn.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;background:var(--amber);border-radius:3px}
+.tab-panel{display:none;padding-top:8px;animation:fadeUp .3s both}
+.tab-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+a.top{display:inline-flex;align-items:center;gap:7px;margin-top:26px;text-decoration:none;font-family:var(--mono);font-size:12px;color:var(--ink-faint)}
+a.top:hover{color:var(--green)}
+footer{margin-top:80px;padding-top:22px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--ink-faint);font-size:12.5px;font-family:var(--mono)}
+footer a{color:var(--green);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:640px){.compare{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header id="top">
+  <div class="kicker">MascotApp · Guía para founders</div>
+  <h1>Probá el producto<br/>sin escribir <em>una línea de código</em>.</h1>
+  <p class="lede">Esta guía es para founders no técnicos. Te explica qué instalar, qué pedirle a Claude, cómo abrir los prototipos y cómo levantar la app real — y hasta cómo pedir una funcionalidad nueva paso a paso.</p>
+
+  <div class="toc">
+    <h2>Índice</h2>
+    <a href="#que-es-que"><span class="n">1</span><span><span class="t">Prototipos vs. app real</span><small>qué es una maqueta y qué es el producto que funciona</small></span><span class="arrow">↓</span></a>
+    <a href="#instalar"><span class="n">2</span><span><span class="t">Qué instalás vos, qué le pedís a Claude</span><small>2 programas a mano · el resto, con un mensaje</small></span><span class="arrow">↓</span></a>
+    <a href="#levantar"><span class="n">3</span><span><span class="t">Levantar la app — paso a paso</span><small>de cero a la app abierta en el navegador</small></span><span class="arrow">↓</span></a>
+    <a href="#prototipos"><span class="n">4</span><span><span class="t">Los prototipos — índice</span><small>landing, doc de validación y la demo (3 estilos)</small></span><span class="arrow">↓</span></a>
+    <a href="#feature"><span class="n">5</span><span><span class="t">De la idea a la funcionalidad</span><small>PRD corto → elegir modelo → Claude la construye</small></span><span class="arrow">↓</span></a>
+  </div>
+</header>
+
+<!-- ── 1 ── -->
+<section id="que-es-que" class="reveal">
+  <div class="sec-head"><span class="idx">01</span><h2>Prototipos vs. app real</h2></div>
+  <p>Hay dos cosas distintas con el mismo nombre, <strong>MascotApp</strong>. No las confundas:</p>
+
+  <div class="compare">
+    <div class="col proto">
+      <span class="badge">Prototipo · maqueta</span>
+      <h4>Las demos</h4>
+      <ul>
+        <li>Pantallas de diseño para <b>mostrar la idea</b></li>
+        <li>Se abren en el navegador con doble clic</li>
+        <li><b>No guardan datos</b> ni tienen login real</li>
+        <li>Sirven para validar el look &amp; feel con clientes</li>
+      </ul>
+    </div>
+    <div class="col real">
+      <span class="badge">App · el proyecto</span>
+      <h4>MascotApp</h4>
+      <ul>
+        <li>El <b>proyecto donde vamos a desarrollar</b> el producto</li>
+        <li>Por ahora casi vacío: arranca el esqueleto (login + base de datos + API)</li>
+        <li>Ya tiene una primera pantalla funcionando de verdad: <b>pacientes</b></li>
+        <li>Acá se construye todo, de a poco, hasta llegar a producción</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout tip"><span class="ic">🧭</span>
+    <p><b>Regla simple:</b> si lo abrís con doble clic y es solo lindo → es un <b>prototipo</b>. Si te pide usuario y contraseña en <code>localhost</code> → es la <b>app real</b>.</p>
+  </div>
+</section>
+
+<!-- ── 2 ── -->
+<section id="instalar" class="reveal">
+  <div class="sec-head"><span class="idx">02</span><h2>Qué instalás vos, qué le pedís a Claude</h2></div>
+  <p>La idea: vos instalás <strong>solo 2 programas</strong> (tienen instalador, como cualquier app). Todo lo demás (versiones, dependencias, base de datos) <strong>se lo pedís a Claude</strong> con un mensaje.</p>
+
+  <h3 class="lead">Lo que instalás vos — 2 cosas</h3>
+  <ul class="plain">
+    <li><strong>Claude Code</strong> — el asistente que hace el trabajo. Es quien instala el resto, levanta la app y programa las features. → <a href="https://docs.anthropic.com/claude-code" style="color:var(--green)">docs.anthropic.com/claude-code</a></li>
+    <li><strong>Docker Desktop</strong> — el motor donde corre la base de datos. Lo instalás una vez y lo dejás abierto. → <a href="https://www.docker.com/products/docker-desktop/" style="color:var(--green)">docker.com</a></li>
+    <li><strong>Una cuenta de GitHub</strong> — ahí vive el código. Gratis; solo necesitás el usuario y contraseña.</li>
+  </ul>
+
+  <h3 class="lead">Lo que le pedís a Claude — todo el resto</h3>
+  <p>Abrí Claude Code y pegale este mensaje. Él se encarga de bajar el código, instalar Node, las dependencias y dejar la base de datos lista:</p>
+
+  <div class="ask">
+    <div class="head">💬 Pegale esto a Claude</div>
+    <div class="body">
+      <p class="quote">Cloná el repo de MascotApp desde GitHub, instalá todo lo que haga falta (Node 20 con nvm y las dependencias del proyecto) y dejá la base de datos lista para arrancar. Avisame si necesitás que haga login en algún lado.</p>
+      <button class="copy-btn" data-copy="Cloná el repo de MascotApp desde GitHub, instalá todo lo que haga falta (Node 20 con nvm y las dependencias del proyecto) y dejá la base de datos lista para arrancar. Avisame si necesitás que haga login en algún lado.">⧉ copiar</button>
+    </div>
+  </div>
+
+  <div class="callout warn"><span class="ic">🔐</span>
+    <p>Algunas cosas necesitan <b>tu permiso o tu login</b> (entrar a GitHub, por ejemplo). Cuando pase, Claude te lo va a pedir y vos seguís las instrucciones en pantalla — no tenés que adivinar nada.</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<!-- ── 3 ── -->
+<section id="levantar" class="reveal">
+  <div class="sec-head"><span class="idx">03</span><h2>Levantar la app — paso a paso</h2></div>
+  <p>Tenés dos caminos.</p>
+
+  <div class="tabs">
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="t-claude">🤖 Que lo haga Claude (recomendado)</button>
+      <button class="tab-btn" data-tab="t-mano">🐳 A mano con Docker</button>
+    </div>
+
+    <div class="tab-panel active" id="t-claude">
+      <p>Con Docker Desktop abierto, pedile a Claude que la levante. Cuando termine, te dice la dirección exacta para abrir:</p>
+      <div class="ask">
+        <div class="head">💬 Pegale esto a Claude</div>
+        <div class="body">
+          <p class="quote">Levantá MascotApp en modo desarrollo y decime en qué dirección la abro en el navegador y con qué usuario y contraseña entro.</p>
+          <button class="copy-btn" data-copy="Levantá MascotApp en modo desarrollo y decime en qué dirección la abro en el navegador y con qué usuario y contraseña entro.">⧉ copiar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="t-mano">
+      <p>Si preferís hacerlo vos, es un comando. Primero copiás la config de ejemplo y después lo levantás todo (base + servidor + web):</p>
+      <div class="codeblock">
+        <div class="bar"><span class="fname">terminal · en la carpeta del repo</span><button class="copy-btn" data-copy="cp .env.example .env && npm run docker:up">⧉ copiar</button></div>
+        <pre><span class="p">$</span> cp .env.example .env    <span class="c"># config de ejemplo (editá JWT_SECRET: 32+ caracteres)</span>
+<span class="p">$</span> npm run docker:up      <span class="c"># levanta base + API + web</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="lead">Cuando ya está corriendo</h3>
+  <ol class="steps">
+    <li>Abrí el navegador en <code>http://localhost:5173</code> <small>(si ese número está ocupado, Claude te dirá cuál usar — p. ej. <code>5174</code>)</small>.</li>
+    <li>Entrá con uno de los usuarios de prueba (abajo).</li>
+    <li>Andá a <b>Pacientes</b> en el menú: ahí podés <b>cargar, editar y borrar</b> mascotas. Eso ya funciona de verdad.</li>
+  </ol>
+
+  <div class="creds">
+    <div class="cred"><div class="role">👑 Admin</div><b>admin@mascotapp.local</b> · Admin123!</div>
+    <div class="cred"><div class="role">🩺 Veterinario</div><b>vet@mascotapp.local</b> · Vet12345!</div>
+  </div>
+
+  <div class="callout warn"><span class="ic">⚠️</span>
+    <p>Si algo no abre, lo más común es que <b>Docker Desktop esté cerrado</b> o que la dirección sea otra. Decile a Claude <i>“la app no abre”</i> y él lo diagnostica.</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<!-- ── 4 ── -->
+<section id="prototipos" class="reveal">
+  <div class="sec-head"><span class="idx">04</span><h2>Los prototipos — índice</h2></div>
+  <p>Esto es lo que hicimos en <strong>la última reunión</strong>: unas demos para explorar la idea. El nombre, las pantallas y todo lo que ves acá salió de ese brainstorming — quedan como <strong>historial</strong> para recordar lo que pensamos, <strong>no son el producto final</strong>. Tocá cualquiera para abrirla en el navegador.</p>
+
+  <div class="proto-card">
+    <div class="top"><span class="ptag">Prototipo</span><h4>Landing — la promesa del producto</h4></div>
+    <p>La página de presentación: qué resuelve MascotApp y por qué importa. Pensada para mostrarle a un cliente o inversor.</p>
+    <div class="screens">
+      <a href="prototipos/index.html">🏠 Abrir landing</a>
+    </div>
+  </div>
+
+  <div class="proto-card">
+    <div class="top"><span class="ptag">Prototipo</span><h4>La demo navegable — 3 estilos visuales</h4></div>
+    <p>La misma demo de la app en <strong>3 propuestas de diseño</strong> para elegir cuál te gusta más. Cada una tiene las mismas 3 pantallas: inicio, nueva consulta e historia clínica de un paciente de ejemplo.</p>
+
+    <p style="font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px">Estilo A — claro</p>
+    <div class="screens">
+      <a href="prototipos/demo/index.html">Inicio</a>
+      <a href="prototipos/demo/nueva-consulta.html">Nueva consulta</a>
+      <a href="prototipos/demo/historia-clinica.html">Historia clínica</a>
+    </div>
+
+    <p style="font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px">Estilo B — oscuro</p>
+    <div class="screens">
+      <a href="prototipos/demo02/index.html">Inicio</a>
+      <a href="prototipos/demo02/nueva-consulta.html">Nueva consulta</a>
+      <a href="prototipos/demo02/historia-clinica.html">Historia clínica</a>
+    </div>
+
+    <p style="font-size:13px;font-weight:700;color:var(--ink);margin:14px 0 6px">Estilo C — claro alternativo</p>
+    <div class="screens">
+      <a href="prototipos/demo03/index.html">Inicio</a>
+      <a href="prototipos/demo03/nueva-consulta.html">Nueva consulta</a>
+      <a href="prototipos/demo03/historia-clinica.html">Historia clínica</a>
+    </div>
+  </div>
+
+  <div class="callout tip"><span class="ic">📝</span>
+    <p>Estos prototipos viven en una carpeta aparte (<code>mascotas</code>), al lado del proyecto. Si al abrirlos ves otro nombre escrito en las pantallas, es un <b>placeholder</b>: el producto es <b>MascotApp</b>.</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<!-- ── 5 ── -->
+<section id="feature" class="reveal">
+  <div class="sec-head"><span class="idx">05</span><h2>De la idea a la funcionalidad</h2></div>
+  <p>Para sumar algo a la app real <strong>no programás</strong>: lo describís en castellano y Claude lo construye. Cuando ya tenés una idea <strong>concreta</strong>, el camino tiene tres momentos: escribir un PRD corto, elegir el modelo adecuado y pedir la construcción.</p>
+
+  <h3 class="lead">1 · Primero, un PRD corto</h3>
+  <p>Un <strong>PRD</strong> es un documento breve que deja por escrito <strong>qué</strong> querés construir y <strong>por qué</strong>, antes de programar. No es burocracia: evita malentendidos y queda como registro de la decisión. Tiene que ser fácil de leer — si no entra en una pantalla, es demasiado largo.</p>
+  <p>Pedile a Claude que lo escriba y lo <strong>guarde en el proyecto</strong>, así no se pierde:</p>
+  <div class="ask">
+    <div class="head">💬 Pegale esto a Claude</div>
+    <div class="body">
+      <p class="quote">Tengo una idea concreta: una pantalla para gestionar tutores (los dueños de las mascotas). Antes de programar, escribí un PRD corto y fácil de leer —problema, qué hace, qué NO hace, cómo se usa y cuándo está listo— y guardalo en el proyecto en <span style="font-style:normal;font-family:var(--mono);font-size:.85em">docs/prd/</span>. Después frenamos para que lo revise.</p>
+      <button class="copy-btn" data-copy="Tengo una idea concreta: una pantalla para gestionar tutores (los dueños de las mascotas). Antes de programar, escribí un PRD corto y fácil de leer —problema, qué hace, qué NO hace, cómo se usa y cuándo está listo— y guardalo en el proyecto en docs/prd/. Después frenamos para que lo revise.">⧉ copiar</button>
+    </div>
+  </div>
+  <div class="callout tip"><span class="ic">📄</span>
+    <p>Los PRD viven en <code>docs/prd/</code> dentro del proyecto. Hay una plantilla lista en <code>docs/prd/_template.md</code> — Claude la usa de molde y deja un archivo por funcionalidad.</p>
+  </div>
+
+  <h3 class="lead">2 · Elegí el modelo adecuado</h3>
+  <p>Claude tiene varios “cerebros” (modelos): unos <strong>piensan y redactan mejor</strong>, otros <strong>construyen más rápido</strong>. Conviene usar uno u otro según el momento. Cambiás con el comando <code>/model</code>:</p>
+  <div class="codeblock">
+    <div class="bar"><span class="fname">dentro de Claude · cambiar de modelo</span><button class="copy-btn" data-copy="/model">⧉ copiar</button></div>
+    <pre><span class="k">&gt;</span> /model        <span class="c"># abre el selector y elegís de una lista</span></pre>
+  </div>
+  <ul class="plain">
+    <li><strong>Para pensar y escribir el PRD</strong> → un modelo más analítico (p. ej. <b>Opus</b>). Razona mejor las decisiones.</li>
+    <li><strong>Para construir la funcionalidad</strong> → un modelo equilibrado y veloz (p. ej. <b>Sonnet</b>). Va más rápido en el día a día.</li>
+  </ul>
+  <div class="callout tip"><span class="ic">🔁</span>
+    <p>No es obligatorio, pero ayuda: escribís el PRD con el modelo “pensante”, hacés <code>/model</code> para pasar al rápido y recién ahí pedís que lo construya.</p>
+  </div>
+
+  <h3 class="lead">3 · Pedí la construcción</h3>
+  <p>Con el PRD listo, una instrucción del proyecto (<code>/ship-feature</code>) dispara todo el flujo: Claude lo construye, lo prueba y te deja una propuesta de cambio para aprobar.</p>
+
+  <ol class="steps">
+    <li><b>Describís</b> qué querés (o le decís “seguí el PRD de tutores”).</li>
+    <li><b>Claude lo construye</b> siguiendo el estilo del proyecto.</li>
+    <li><b>Lo prueba solo</b> (revisa que no rompa nada).</li>
+    <li><b>Te deja un “PR”</b> — una propuesta de cambio en GitHub que alguien del equipo aprueba antes de que sea oficial.</li>
+  </ol>
+
+  <p>Abrí Claude Code en la carpeta del repo y escribí:</p>
+
+  <div class="codeblock">
+    <div class="bar"><span class="fname">dentro de Claude · en la carpeta del repo</span><button class="copy-btn" data-copy="/ship-feature pantalla de tutores (dueños de las mascotas) con alta, edición y baja, igual que la de pacientes">⧉ copiar</button></div>
+    <pre><span class="k">&gt;</span> /ship-feature <span class="s">pantalla de tutores (dueños de las mascotas)
+                con alta, edición y baja, igual que la de pacientes</span></pre>
+  </div>
+
+  <p>Si preferís no acordarte del comando, alcanza con pedirlo en palabras:</p>
+  <div class="ask">
+    <div class="head">💬 Pegale esto a Claude</div>
+    <div class="body">
+      <p class="quote">Quiero sumar a la app una pantalla para gestionar tutores (los dueños de las mascotas): poder verlos en una lista, agregar uno nuevo, editarlo y borrarlo. Hacelo siguiendo el estilo de la pantalla de pacientes y dejame el cambio listo para revisar.</p>
+      <button class="copy-btn" data-copy="Quiero sumar a la app una pantalla para gestionar tutores (los dueños de las mascotas): poder verlos en una lista, agregar uno nuevo, editarlo y borrarlo. Hacelo siguiendo el estilo de la pantalla de pacientes y dejame el cambio listo para revisar.">⧉ copiar</button>
+    </div>
+  </div>
+
+  <h3 class="lead">Para que salga bien, pedilo así</h3>
+  <ul class="plain">
+    <li><strong>Una funcionalidad por vez.</strong> “Pantalla de tutores”, no “rehacé toda la app”.</li>
+    <li><strong>Decí a qué se parece.</strong> “Igual que pacientes” le da a Claude el molde a copiar.</li>
+    <li><strong>Aclará qué tiene que hacer el usuario.</strong> Ver, agregar, editar, borrar, buscar…</li>
+    <li><strong>Probalo vos al final.</strong> Pedile <i>“mostrame cómo quedó en la app”</i> y revisá en el navegador antes de aprobar.</li>
+  </ul>
+
+  <div class="callout tip"><span class="ic">✅</span>
+    <p>Antes de dejarte el cambio, Claude corre las pruebas del proyecto. Si algo falla, lo arregla y recién ahí te avisa. Vos aprobás el <b>PR</b> cuando estés conforme.</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<footer>
+  <span>MascotApp · guía para founders 🐾</span>
+  <span>¿Más técnico? → <a href="quickstart.html">quickstart</a> · <a href="onboarding.html">onboarding</a></span>
+</footer>
+
+</div>
+
+<script>
+/* copy buttons */
+document.querySelectorAll(".copy-btn").forEach(btn=>{
+  btn.addEventListener("click",async()=>{
+    try{await navigator.clipboard.writeText(btn.dataset.copy);}
+    catch(e){
+      const ta=document.createElement("textarea");ta.value=btn.dataset.copy;
+      document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();
+    }
+    const prev=btn.textContent;btn.textContent="✓ copiado";btn.classList.add("ok");
+    setTimeout(()=>{btn.textContent=prev;btn.classList.remove("ok");},1500);
+  });
+});
+/* tabs */
+document.querySelectorAll(".tabs").forEach(tabs=>{
+  tabs.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      tabs.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      tabs.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      tabs.querySelector("#"+btn.dataset.tab).classList.add("active");
+    });
+  });
+});
+/* reveal */
+const rev=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rev.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll(".reveal").forEach(el=>rev.observe(el));
+</script>
+</body>
+</html>

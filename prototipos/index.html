@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rumi · La historia clínica se escribe sola</title>
+<meta name="description" content="Rumi escucha la consulta, transcribe en vivo y arma la historia clínica lista para firmar. Sumate a la lista de acceso anticipado." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper: oklch(0.993 0.004 85);
+  --surface: oklch(0.981 0.005 84);
+  --panel: oklch(0.998 0.003 85);
+  --panel-sunk: oklch(0.972 0.006 83);
+
+  --ink: oklch(0.27 0.018 56);
+  --ink-soft: oklch(0.43 0.018 60);
+  --ink-faint: oklch(0.505 0.02 62);
+  --ink-ghost: oklch(0.53 0.016 66);
+
+  --line: oklch(0.905 0.008 80);
+  --line-soft: oklch(0.945 0.006 82);
+  --line-strong: oklch(0.86 0.01 78);
+
+  --pine: oklch(0.505 0.083 162);
+  --pine-deep: oklch(0.43 0.078 162);
+  --pine-bright: oklch(0.58 0.09 162);
+  --pine-wash: oklch(0.955 0.022 162);
+  --pine-line: oklch(0.86 0.04 162);
+
+  --amber: oklch(0.66 0.115 68);
+  --amber-text: oklch(0.47 0.095 60);
+  --amber-wash: oklch(0.955 0.038 78);
+  --amber-line: oklch(0.86 0.06 76);
+
+  --alert: oklch(0.55 0.17 28);
+
+  --shadow-sm: 0 1px 2px oklch(0.4 0.03 60 / 0.05), 0 1px 1px oklch(0.4 0.03 60 / 0.04);
+  --shadow-md: 0 8px 26px -12px oklch(0.38 0.03 60 / 0.18), 0 2px 6px -3px oklch(0.38 0.03 60 / 0.08);
+  --shadow-lg: 0 28px 64px -28px oklch(0.34 0.03 60 / 0.30);
+
+  --r: 14px; --r-sm: 9px; --r-xs: 6px; --r-pill: 999px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --serif: 'Newsreader', Georgia, serif;
+  --sans: 'Hanken Grotesk', system-ui, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --bay: 70rem;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none !important;transition:none !important}}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-0.018em;margin:0;line-height:1.06;color:var(--ink)}
+p{margin:0}
+mark{background:var(--amber-wash);color:var(--amber-text);padding:0.05em 0.28em;border-radius:var(--r-xs);font-weight:500}
+.wrap{max-width:var(--bay);margin-inline:auto;padding-inline:clamp(1.1rem,4vw,2.5rem)}
+.eyebrow{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-ghost);display:inline-flex;gap:0.6em;align-items:center}
+.eyebrow::before{content:"";width:1.6em;height:1px;background:var(--line-strong)}
+.eyebrow.live::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--pine);box-shadow:0 0 0 0 var(--pine-line);animation:beat 2.2s var(--ease-soft) infinite}
+@keyframes beat{0%{box-shadow:0 0 0 0 oklch(0.58 0.09 162 / 0.5)}70%{box-shadow:0 0 0 7px oklch(0.58 0.09 162 / 0)}100%{box-shadow:0 0 0 0 oklch(0.58 0.09 162 / 0)}}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:0.5em;white-space:nowrap;font-family:var(--sans);font-weight:600;font-size:0.95rem;padding:0.74em 1.3em;border-radius:var(--r-pill);border:1px solid transparent;cursor:pointer;text-decoration:none;transition:transform .2s var(--ease), box-shadow .2s var(--ease), background .2s var(--ease)}
+.btn svg{width:1.05em;height:1.05em}
+.btn-primary{background:linear-gradient(160deg, var(--pine-bright), var(--pine-deep));color:var(--paper);box-shadow:var(--shadow-sm), inset 0 1px 0 oklch(1 0 0 / 0.18)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-md), inset 0 1px 0 oklch(1 0 0 / 0.18)}
+.btn-ghost{background:var(--panel);color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{transform:translateY(-2px);border-color:var(--line-strong);box-shadow:var(--shadow-sm)}
+.btn-light{background:var(--paper);color:var(--pine-deep)}
+.btn-light:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+
+/* brand mark */
+.mark{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;background:linear-gradient(150deg, var(--pine-bright), var(--pine-deep));box-shadow:var(--shadow-sm), inset 0 1px 0 oklch(1 0 0 / 0.22)}
+.mark svg{width:17px;height:17px;color:var(--paper)}
+.lockup{display:flex;align-items:center;gap:0.6rem;font-weight:700;letter-spacing:-0.01em;font-size:1.12rem;text-decoration:none;color:var(--ink)}
+.lockup .tag{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--ink-ghost);letter-spacing:0.06em}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;transition:background .3s var(--ease), border-color .3s var(--ease), box-shadow .3s var(--ease);border-bottom:1px solid transparent}
+.nav.stuck{background:oklch(0.993 0.004 85 / 0.82);backdrop-filter:saturate(1.4) blur(12px);border-bottom-color:var(--line-soft);box-shadow:var(--shadow-sm)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:68px}
+.nav .btn{padding:0.55em 1.1em;font-size:0.9rem}
+
+/* hero */
+.hero{padding-top:clamp(2.2rem,5vw,3.8rem);padding-bottom:clamp(2.8rem,6vw,4.6rem);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 75% at 85% -12%, var(--pine-wash), transparent 52%);z-index:-1}
+.hero-grid{display:grid;grid-template-columns:1.04fr 0.96fr;gap:clamp(1.6rem,4vw,3.4rem);align-items:center}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:2.2rem}}
+.hero h1{font-size:clamp(2.5rem,5.6vw,4.2rem);margin-top:1.05rem}
+.hero h1 em{font-style:italic;color:var(--pine-deep)}
+.hero-lead{max-width:34rem;margin-top:1.2rem;font-size:clamp(1.04rem,1.5vw,1.18rem);color:var(--ink-soft);line-height:1.55}
+
+/* waitlist form */
+.waitlist{margin-top:1.8rem;max-width:30rem}
+.wl-row{display:flex;gap:0.5rem;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-pill);padding:0.32rem 0.32rem 0.32rem 0.5rem;box-shadow:var(--shadow-sm);transition:border-color .2s var(--ease), box-shadow .2s var(--ease)}
+.wl-row:focus-within{border-color:var(--pine-line);box-shadow:var(--shadow-md)}
+.wl-row input{flex:1;min-width:0;border:none;outline:none;background:none;font:inherit;font-size:0.96rem;color:var(--ink);padding:0.5em 0.6em}
+.wl-row input::placeholder{color:var(--ink-faint)}
+.wl-row .btn{flex:none}
+.wl-note{margin-top:0.7rem;font-size:0.82rem;color:var(--ink-faint);display:flex;align-items:center;gap:0.45rem}
+.wl-note svg{width:0.95em;height:0.95em;color:var(--pine);flex:none}
+.wl-done{display:none;align-items:flex-start;gap:0.7rem;background:var(--pine-wash);border:1px solid var(--pine-line);border-radius:var(--r);padding:0.95rem 1.1rem}
+.wl-done.show{display:flex;animation:fadeup .5s var(--ease)}
+.wl-done .ck{width:26px;height:26px;border-radius:50%;background:var(--pine);color:var(--paper);display:grid;place-items:center;flex:none;margin-top:0.05rem}
+.wl-done .ck svg{width:15px;height:15px}
+.wl-done b{display:block;color:var(--pine-deep);font-size:0.98rem}
+.wl-done p{font-size:0.88rem;color:var(--ink-soft);margin-top:0.1rem}
+.demo-link{margin-top:1.3rem;display:inline-flex;align-items:center;gap:0.45rem;font-size:0.92rem;font-weight:600;color:var(--pine-deep);text-decoration:none}
+.demo-link svg{width:1.05em;height:1.05em;transition:transform .25s var(--ease)}
+.demo-link:hover svg{transform:translateX(4px)}
+
+/* showpiece */
+.slab{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden}
+.slab-head{display:flex;align-items:center;gap:0.6rem;padding:0.8rem 1.05rem;border-bottom:1px solid var(--line-soft);font-size:0.8rem;font-weight:600;color:var(--ink-soft)}
+.ico{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:none}
+.ico-pine{background:var(--pine-wash);color:var(--pine-deep)}
+.ico-amber{background:var(--amber-wash);color:var(--amber-text)}
+.ico svg{width:14px;height:14px}
+.rec-dot{margin-left:auto;display:inline-flex;align-items:center;gap:0.42em;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--alert)}
+.rec-dot i{width:7px;height:7px;border-radius:50%;background:var(--alert);animation:blink 1.4s var(--ease-soft) infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.25}}
+.wave{display:flex;align-items:center;gap:3px;height:20px;padding:0.7rem 1.05rem 0}
+.wave i{width:3px;height:100%;border-radius:2px;background:var(--pine-line);transform-origin:center;transform:scaleY(0.3);animation:wv 1.3s var(--ease-soft) infinite}
+@keyframes wv{0%,100%{transform:scaleY(0.28)}50%{transform:scaleY(1)}}
+.transcript{padding:0.6rem 1.05rem 0.9rem;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ink-soft)}
+.transcript .ln{display:flex;gap:0.7rem;padding:0.12rem 0}
+.transcript .t{color:var(--pine-deep);font-weight:500;flex:none}
+.split{border-top:1px dashed var(--line)}
+.doc-banner{display:flex;align-items:center;gap:0.5rem;background:var(--amber-wash);color:var(--amber-text);padding:0.55rem 1.05rem;font-size:0.76rem;font-weight:600;border-bottom:1px solid var(--amber-line)}
+.doc-banner .conf{margin-left:auto;font-family:var(--mono);font-size:11px;font-weight:500}
+.doc-body{padding:0.95rem 1.1rem 1.05rem}
+.sec{margin-bottom:0.85rem}
+.sec:last-child{margin-bottom:0}
+.sec-h{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-ghost);margin-bottom:0.35rem}
+.sec-h b{color:var(--pine-deep);font-weight:600}
+.sec p{font-size:0.88rem;color:var(--ink);line-height:1.5}
+.vitals{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:var(--r-sm);overflow:hidden}
+.vital{background:var(--panel);padding:0.5rem 0.65rem}
+.vital .k{font-size:10px;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-ghost)}
+.vital .v{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink);margin-top:0.1rem}
+
+/* how */
+.how{background:var(--surface);border-block:1px solid var(--line-soft);padding-block:clamp(3rem,6vw,4.6rem)}
+.how-head{max-width:40rem}
+.how-head h2{font-size:clamp(1.7rem,3.4vw,2.5rem);margin-top:0.75rem}
+.how-head p{margin-top:0.8rem;color:var(--ink-soft);font-size:1.04rem}
+.steps{margin-top:clamp(1.8rem,3vw,2.8rem);display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(0.9rem,2vw,1.6rem)}
+@media (max-width:760px){.steps{grid-template-columns:1fr;gap:1rem}}
+.stepc{position:relative;padding:1.4rem 0 0}
+.stepc + .stepc{padding-left:clamp(0.9rem,2vw,1.6rem);border-left:1px solid var(--line)}
+@media (max-width:760px){.stepc + .stepc{padding-left:0;border-left:0;border-top:1px solid var(--line);padding-top:1.4rem}}
+.stepc .no{font-family:var(--mono);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--pine-deep)}
+.stepc h3{font-size:1.22rem;margin-top:0.6rem}
+.stepc p{margin-top:0.55rem;color:var(--ink-soft);font-size:0.96rem;max-width:24rem}
+
+/* closing band */
+.cta{background:linear-gradient(165deg, var(--pine-deep), oklch(0.36 0.07 164));color:var(--paper);padding-block:clamp(3rem,6vw,4.6rem)}
+.cta .eyebrow{color:oklch(0.86 0.04 162)}
+.cta .eyebrow::before{background:oklch(1 0 0 / 0.3)}
+.cta-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:clamp(1.6rem,4vw,3.5rem);align-items:center}
+@media (max-width:820px){.cta-grid{grid-template-columns:1fr;gap:1.8rem}}
+.cta h2{color:var(--paper);font-size:clamp(1.8rem,3.6vw,2.7rem);max-width:16ch;margin-top:1rem}
+.cta h2 em{font-style:italic;color:oklch(0.9 0.06 150)}
+.cta p{color:oklch(0.92 0.02 162);margin-top:1rem;max-width:32rem;font-size:1.04rem}
+.cta .wl-row{background:oklch(1 0 0 / 0.1);border-color:oklch(1 0 0 / 0.25)}
+.cta .wl-row input{color:var(--paper)}
+.cta .wl-row input::placeholder{color:oklch(0.88 0.02 162)}
+.cta .wl-row:focus-within{border-color:oklch(1 0 0 / 0.5);box-shadow:none}
+.cta .wl-note{color:oklch(0.86 0.02 162)}
+.cta .wl-note svg{color:oklch(0.86 0.06 150)}
+.cta .wl-done{background:oklch(1 0 0 / 0.12);border-color:oklch(1 0 0 / 0.28)}
+.cta .wl-done b{color:var(--paper)}
+.cta .wl-done p{color:oklch(0.9 0.02 162)}
+.cta .wl-done .ck{background:var(--paper);color:var(--pine-deep)}
+
+/* footer */
+.foot{border-top:1px solid var(--line);padding-block:2rem}
+.foot-in{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between}
+.foot p{font-size:0.84rem;color:var(--ink-faint)}
+.foot a{font-size:0.85rem;color:var(--ink-soft);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease), transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="lockup" href="#top">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM10.5 6.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM12 12.5c-2.6 0-4.8 2.1-5.2 4.2-.3 1.6 1 2.8 2.6 2.8.8 0 1.7-.3 2.6-.3s1.8.3 2.6.3c1.6 0 2.9-1.2 2.6-2.8-.4-2.1-2.6-4.2-5.2-4.2Z"/></svg></span>
+      <span>Rumi <span class="tag">· para veterinarios</span></span>
+    </a>
+    <a class="btn btn-primary" href="#sumate">Acceso anticipado</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow live reveal">En desarrollo · cupos limitados</span>
+      <h1 class="reveal">Vos atendés.<br>Rumi <em>escribe la historia</em>.</h1>
+      <p class="hero-lead reveal">Rumi escucha la consulta, transcribe en vivo y arma una historia clínica estructurada, lista para revisar y firmar. Se terminó tipear cada paciente al final del día.</p>
+
+      <form class="waitlist reveal" id="wl-hero" novalidate>
+        <div class="wl-row">
+          <input type="email" name="email" placeholder="tu@clinica.vet" aria-label="Tu email" required />
+          <button class="btn btn-primary" type="submit">Sumate a la lista
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <p class="wl-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Te escribimos cuando abramos cupos. Sin spam, baja cuando quieras.
+        </p>
+        <div class="wl-done" role="status">
+          <span class="ck" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><b>Estás en la lista.</b><p>Te avisamos apenas haya un lugar para tu clínica.</p></span>
+        </div>
+      </form>
+
+      <a class="demo-link reveal" href="demo/index.html">Mientras tanto, mirá la demo
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <!-- showpiece: transcript -> historia -->
+    <div class="slab reveal" aria-label="De la conversación a la historia clínica">
+      <div class="slab-head">
+        <span class="ico ico-pine" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3Z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke-linecap="round"/></svg></span>
+        En la consulta · Toby
+        <span class="rec-dot"><i></i>00:42</span>
+      </div>
+      <div class="wave" aria-hidden="true">
+        <i style="animation-delay:-0.1s"></i><i style="animation-delay:-0.7s"></i><i style="animation-delay:-0.3s"></i><i style="animation-delay:-0.9s"></i><i style="animation-delay:-0.5s"></i><i style="animation-delay:-0.2s"></i><i style="animation-delay:-0.8s"></i><i style="animation-delay:-0.4s"></i><i style="animation-delay:-1s"></i><i style="animation-delay:-0.6s"></i><i style="animation-delay:-0.15s"></i><i style="animation-delay:-0.75s"></i><i style="animation-delay:-0.35s"></i><i style="animation-delay:-0.95s"></i><i style="animation-delay:-0.55s"></i><i style="animation-delay:-0.25s"></i><i style="animation-delay:-0.65s"></i>
+      </div>
+      <div class="transcript">
+        <div class="ln"><span class="t">00:12</span><span>Vómitos alimentarios, tres episodios desde ayer.</span></div>
+        <div class="ln"><span class="t">00:28</span><span>Decaimiento, apetito disminuido, sin diarrea.</span></div>
+        <div class="ln"><span class="t">00:41</span><span>Abdomen blando, sin dolor a la palpación.</span></div>
+      </div>
+      <div class="split"></div>
+      <div class="doc-banner">
+        <span class="ico ico-amber" style="width:20px;height:20px" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 2.2 5.6L20 9l-4.3 3.6L17 18l-5-3-5 3 1.3-5.4L4 9l5.8-1.4L12 2Z"/></svg></span>
+        Historia clínica generada por IA
+        <span class="conf">conf. 96%</span>
+      </div>
+      <div class="doc-body">
+        <div class="sec">
+          <div class="sec-h"><b>02</b> · Anamnesis</div>
+          <p>Vómitos alimentarios <mark>3 veces desde ayer</mark>. Sin diarrea. Apetito disminuido. Mucosas rosadas. Abdomen blando, sin dolor.</p>
+        </div>
+        <div class="sec">
+          <div class="sec-h"><b>03</b> · Examen clínico</div>
+          <div class="vitals">
+            <div class="vital"><div class="k">Temp.</div><div class="v">38,7 °C</div></div>
+            <div class="vital"><div class="k">F. card.</div><div class="v">110 lpm</div></div>
+            <div class="vital"><div class="k">F. resp.</div><div class="v">24 rpm</div></div>
+            <div class="vital"><div class="k">Mucosas</div><div class="v">Rosadas</div></div>
+            <div class="vital"><div class="k">TLC</div><div class="v">1,5 s</div></div>
+            <div class="vital"><div class="k">Hidrat.</div><div class="v">−5 %</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="how" id="como">
+  <div class="wrap">
+    <div class="how-head reveal">
+      <span class="eyebrow">Cómo funciona</span>
+      <h2>Una consulta. Cero teclado.</h2>
+      <p>Hablás como hablás siempre. Rumi convierte la conversación en un documento clínico que controlás vos.</p>
+    </div>
+    <div class="steps">
+      <article class="stepc reveal">
+        <span class="no">01 · Grabás</span>
+        <h3>Apretás y atendés</h3>
+        <p>Rumi transcribe en vivo, detecta términos clínicos y sugiere los campos del examen mientras avanzás.</p>
+      </article>
+      <article class="stepc reveal">
+        <span class="no">02 · Rumi redacta</span>
+        <h3>Recibís la historia armada</h3>
+        <p>Motivo, anamnesis, examen, evaluación y plan. Lo que la IA estima con baja confianza queda marcado para verificar.</p>
+      </article>
+      <article class="stepc reveal">
+        <span class="no">03 · Firmás vos</span>
+        <h3>Tu criterio sella el registro</h3>
+        <p>Editás todo antes de firmar. Al firmar, queda como registro oficial: después se agrega un addendum, nunca se reescribe.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+<section class="cta" id="sumate">
+  <div class="wrap cta-grid">
+    <div>
+      <span class="eyebrow reveal">Acceso anticipado</span>
+      <h2 class="reveal">Sé de los primeros en <em>recuperar la noche</em>.</h2>
+      <p class="reveal">Estamos abriendo cupos por clínica. Dejá tu email y te escribimos cuando haya un lugar para vos.</p>
+    </div>
+    <div class="reveal">
+      <form class="waitlist" id="wl-cta" novalidate style="margin-top:0;max-width:none">
+        <div class="wl-row">
+          <input type="email" name="email" placeholder="tu@clinica.vet" aria-label="Tu email" required />
+          <button class="btn btn-light" type="submit">Sumate
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+        <p class="wl-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Sin spam. Solo te avisamos cuando abramos tu lugar.
+        </p>
+        <div class="wl-done" role="status">
+          <span class="ck" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><b>Estás en la lista.</b><p>Gracias. Te avisamos apenas haya cupo.</p></span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <a class="lockup" href="#top"><span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm14 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM10.5 6.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0ZM12 12.5c-2.6 0-4.8 2.1-5.2 4.2-.3 1.6 1 2.8 2.6 2.8.8 0 1.7-.3 2.6-.3s1.8.3 2.6.3c1.6 0 2.9-1.2 2.6-2.8-.4-2.1-2.6-4.2-5.2-4.2Z"/></svg></span><span>Rumi</span></a>
+    <p>Demo estática · El veterinario habla, Rumi escucha.</p>
+    <a href="demo/index.html">Ver la demo →</a>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+const onScroll = () => nav.classList.toggle('stuck', window.scrollY > 12);
+onScroll(); addEventListener('scroll', onScroll, {passive:true});
+
+const io = new IntersectionObserver((entries) => {
+  for (const e of entries){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }
+}, {rootMargin:'0px 0px -8% 0px', threshold:0.08});
+document.querySelectorAll('.reveal').forEach((el,i) => { el.style.transitionDelay = Math.min(i % 4, 3) * 60 + 'ms'; io.observe(el); });
+
+// waitlist (demo: no backend, confirms inline)
+document.querySelectorAll('.waitlist').forEach(form => {
+  const row = form.querySelector('.wl-row');
+  const note = form.querySelector('.wl-note');
+  const done = form.querySelector('.wl-done');
+  const input = form.querySelector('input');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!input.value || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(input.value)) {
+      input.focus(); row.style.borderColor = 'var(--alert)';
+      return;
+    }
+    row.style.display = 'none'; if (note) note.style.display = 'none';
+    done.classList.add('show');
+  });
+  input.addEventListener('input', () => { row.style.borderColor = ''; });
+});
+</script>
+</body>
+</html>

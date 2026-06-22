@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MascotApp · Quickstart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --paper:#FAF5EC; --paper-2:#F3ECDD;
+  --ink:#1C2A22; --ink-soft:#47564C; --ink-faint:#7A8780;
+  --green:#2E5E45; --green-deep:#1E3F2F; --green-tint:#E3EDE5;
+  --amber:#D97B29; --amber-soft:#F7E3CC;
+  --code-bg:#15241C; --code-ink:#D9E8DC;
+  --line:#DCD2BE; --radius:14px;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --sans:"Instrument Sans",sans-serif;
+  --display:"Fraunces",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--paper);color:var(--ink);
+  line-height:1.65;font-size:16.5px;
+  background-image:
+    radial-gradient(circle at 10% 0%, rgba(46,94,69,.05), transparent 35%),
+    radial-gradient(circle at 95% 20%, rgba(217,123,41,.06), transparent 38%);
+}
+::selection{background:var(--amber-soft)}
+.wrap{max-width:780px;margin:0 auto;padding:0 24px 110px}
+
+/* hero */
+header{padding:70px 0 30px;text-align:left}
+.kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);display:flex;align-items:center;gap:12px}
+.kicker::before{content:"";width:38px;height:1.5px;background:var(--amber)}
+h1{font-family:var(--display);font-weight:900;font-size:clamp(38px,6vw,58px);letter-spacing:-.03em;line-height:1.04;color:var(--green-deep);margin:14px 0 12px}
+h1 em{font-style:italic;font-weight:600;color:var(--amber)}
+.lede{color:var(--ink-soft);font-size:18px;max-width:56ch}
+
+/* index navegable */
+.toc{
+  margin:34px 0 10px;border:1.5px solid var(--green);border-radius:var(--radius);
+  background:#fffb;overflow:hidden;
+}
+.toc h2{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:500;padding:14px 22px 0}
+.toc a{
+  display:flex;align-items:center;gap:16px;padding:15px 22px;text-decoration:none;color:var(--ink);
+  border-bottom:1px dashed var(--line);transition:background .15s,padding-left .2s;
+}
+.toc a:last-child{border-bottom:0}
+.toc a:hover{background:var(--green-tint);padding-left:30px}
+.toc .n{
+  font-family:var(--display);font-weight:700;font-size:17px;color:#F0C892;background:var(--green-deep);
+  width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;
+}
+.toc .t{font-weight:600;font-size:16px}
+.toc small{display:block;font-weight:400;font-size:13px;color:var(--ink-faint)}
+.toc .opt .n{background:var(--amber)}
+.toc .arrow{margin-left:auto;color:var(--amber);font-family:var(--mono)}
+
+/* secciones */
+section{padding-top:64px}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:14px;border-top:1px dashed var(--line);padding-top:42px}
+.sec-head .idx{font-family:var(--display);font-weight:900;font-size:44px;line-height:1;color:transparent;-webkit-text-stroke:1.5px var(--amber)}
+.sec-head h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3.4vw,32px);letter-spacing:-.02em;color:var(--green-deep)}
+p{color:var(--ink-soft);margin-bottom:14px}
+p strong,li strong{color:var(--ink)}
+code:not(pre code){font-family:var(--mono);font-size:.85em;background:var(--green-tint);color:var(--green-deep);padding:2px 7px;border-radius:6px;white-space:nowrap}
+ul.plain{list-style:none;margin:0 0 16px;display:flex;flex-direction:column;gap:7px}
+ul.plain li{padding-left:22px;position:relative;color:var(--ink-soft);font-size:15px}
+ul.plain li::before{content:"◆";position:absolute;left:1px;top:1px;font-size:9px;color:var(--amber)}
+
+/* code blocks */
+.codeblock{position:relative;margin:16px 0 22px;border-radius:var(--radius);overflow:hidden;box-shadow:0 14px 30px -22px rgba(21,36,28,.55)}
+.codeblock .bar{display:flex;align-items:center;justify-content:space-between;background:var(--green-deep);padding:8px 15px}
+.codeblock .fname{font-family:var(--mono);font-size:11.5px;color:#A9C9B2;letter-spacing:.04em}
+.copy-btn{font-family:var(--mono);font-size:11px;color:#D9E8DC;background:#ffffff14;border:1px solid #ffffff22;border-radius:7px;padding:4px 11px;cursor:pointer;transition:all .15s}
+.copy-btn:hover{background:#ffffff28}
+.copy-btn.ok{background:var(--amber);border-color:var(--amber);color:#fff}
+pre{background:var(--code-bg);color:var(--code-ink);padding:16px 19px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.75}
+pre .c{color:#6E8E79;font-style:italic}
+pre .s{color:#D98F4E}
+pre .k{color:#F0C892}
+pre .p{color:#8FB89C;user-select:none}
+
+/* callouts */
+.callout{display:flex;gap:13px;padding:15px 18px;border-radius:var(--radius);margin:18px 0;border:1px solid;align-items:flex-start}
+.callout .ic{font-size:18px;flex:none}
+.callout p{margin:0;font-size:14.5px}
+.callout.tip{background:var(--green-tint);border-color:#BFD6C4}
+.callout.warn{background:var(--amber-soft);border-color:#EBC79C}
+.callout.warn p{color:#7A4814}
+
+/* tabs */
+.tabs{margin:20px 0}
+.tab-row{display:flex;gap:6px;border-bottom:2px solid var(--line)}
+.tab-btn{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--ink-faint);background:none;border:none;padding:10px 18px;cursor:pointer;position:relative;border-radius:10px 10px 0 0}
+.tab-btn:hover{color:var(--ink);background:var(--paper-2)}
+.tab-btn.active{color:var(--green-deep)}
+.tab-btn.active::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:3px;background:var(--amber);border-radius:3px}
+.tab-panel{display:none;padding-top:4px;animation:fadeUp .3s both}
+.tab-panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* credenciales */
+.creds{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}
+.cred{border:1.5px dashed var(--amber);border-radius:12px;padding:12px 16px;background:#fff;font-family:var(--mono);font-size:13px;flex:1;min-width:230px}
+.cred .role{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:4px}
+.cred b{color:var(--green-deep);font-weight:600}
+
+/* skill section */
+.skill-box{
+  border:1.5px solid var(--amber);border-radius:var(--radius);padding:22px 24px;background:#fff;
+  margin:18px 0;position:relative;
+}
+.skill-box::before{
+  content:"OPCIONAL";position:absolute;top:-10px;left:20px;background:var(--amber);color:#fff;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;padding:3px 11px;border-radius:99px;
+}
+.skill-box h3{font-family:var(--display);font-size:20px;font-weight:700;color:var(--green-deep);margin-bottom:8px}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:16px 0;font-family:var(--mono);font-size:11.5px}
+.flow .fnode{background:#fff;border:1.5px solid var(--green);color:var(--green-deep);border-radius:99px;padding:6px 13px}
+.flow .fnode.hot{background:var(--green-deep);color:#F0C892;border-color:var(--green-deep)}
+.flow .farrow{color:var(--amber);font-size:15px}
+
+a.top{
+  display:inline-flex;align-items:center;gap:7px;margin-top:26px;text-decoration:none;
+  font-family:var(--mono);font-size:12px;color:var(--ink-faint);
+}
+a.top:hover{color:var(--green)}
+footer{margin-top:80px;padding-top:22px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--ink-faint);font-size:12.5px;font-family:var(--mono)}
+footer a{color:var(--green);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header id="top">
+  <div class="kicker">MascotApp · Quickstart</div>
+  <h1>De cero a PR<br/>en <em>cuatro pasos</em>.</h1>
+  <p class="lede">La versión corta: clonás, levantás, creás tu feature y — si querés — dejás que el skill <code>/ship-feature</code> haga el resto.</p>
+
+  <div class="toc">
+    <h2>Índice</h2>
+    <a href="#clonar"><span class="n">1</span><span><span class="t">Clonar el repo</span><small>git clone + Node 20 + dependencias</small></span><span class="arrow">↓</span></a>
+    <a href="#levantar"><span class="n">2</span><span><span class="t">Levantar el servidor</span><small>Docker en un comando, o dev local con hot-reload</small></span><span class="arrow">↓</span></a>
+    <a href="#feature"><span class="n">3</span><span><span class="t">Crear una feature</span><small>rama → código → checks → PR</small></span><span class="arrow">↓</span></a>
+    <a href="#skill" class="opt"><span class="n">4</span><span><span class="t">Opcional: shipear con un skill</span><small>/ship-feature hace rama, código, checks y PR por vos</small></span><span class="arrow">↓</span></a>
+  </div>
+</header>
+
+<!-- ── 1 ── -->
+<section id="clonar" class="reveal">
+  <div class="sec-head"><span class="idx">01</span><h2>Clonar el repo</h2></div>
+  <p>Necesitás <strong>Node ≥ 20</strong> (hay <code>.nvmrc</code>), <strong>npm</strong> y <strong>Docker</strong>. Después:</p>
+  <div class="codeblock">
+    <div class="bar"><span class="fname">terminal</span><button class="copy-btn" data-copy="git clone https://github.com/franpiaggio/mascotapp.git && cd mascotapp && nvm use && npm install">⧉ copiar</button></div>
+    <pre><span class="p">$</span> git clone https://github.com/franpiaggio/mascotapp.git
+<span class="p">$</span> cd mascotapp
+<span class="p">$</span> nvm use          <span class="c"># Node 20</span>
+<span class="p">$</span> npm install      <span class="c"># workspaces: instala api + web de una</span></pre>
+  </div>
+</section>
+
+<!-- ── 2 ── -->
+<section id="levantar" class="reveal">
+  <div class="sec-head"><span class="idx">02</span><h2>Levantar el servidor</h2></div>
+
+  <div class="tabs">
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="t-docker">🐳 Todo con Docker</button>
+      <button class="tab-btn" data-tab="t-local">⚡ Dev local</button>
+    </div>
+
+    <div class="tab-panel active" id="t-docker">
+      <p>Un comando levanta base, API (con migraciones automáticas) y web:</p>
+      <div class="codeblock">
+        <div class="bar"><span class="fname">terminal</span><button class="copy-btn" data-copy="cp .env.example .env && npm run docker:up">⧉ copiar</button></div>
+        <pre><span class="p">$</span> cp .env.example .env    <span class="c"># editá JWT_SECRET: mínimo 32 caracteres</span>
+<span class="p">$</span> npm run docker:up</pre>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="t-local">
+      <p>Solo Postgres en Docker; API y web con hot-reload:</p>
+      <div class="codeblock">
+        <div class="bar"><span class="fname">terminal</span><button class="copy-btn" data-copy="npm run docker:db && cd apps/api && cp .env.example .env && npm run prisma:generate && npm run prisma:migrate && npm run prisma:seed && cd ../web && cp .env.example .env && cd ../.. && npm run dev">⧉ copiar</button></div>
+        <pre><span class="p">$</span> npm run docker:db                <span class="c"># solo Postgres 16</span>
+<span class="p">$</span> cd apps/api <span class="p">&&</span> cp .env.example .env   <span class="c"># completá JWT_SECRET</span>
+<span class="p">$</span> npm run prisma:generate <span class="p">&&</span> npm run prisma:migrate <span class="p">&&</span> npm run prisma:seed
+<span class="p">$</span> cd ../web <span class="p">&&</span> cp .env.example .env <span class="p">&&</span> cd ../..
+<span class="p">$</span> npm run dev                      <span class="c"># API + Web en paralelo</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <ul class="plain">
+    <li>Web: <code>http://localhost:5173</code> · API: <code>http://localhost:3001</code> · Swagger: <code>/docs</code> · Health: <code>/health</code></li>
+  </ul>
+
+  <div class="creds">
+    <div class="cred"><div class="role">👑 Admin</div><b>admin@mascotapp.local</b> · Admin123!</div>
+    <div class="cred"><div class="role">🩺 Vet</div><b>vet@mascotapp.local</b> · Vet12345!</div>
+  </div>
+
+  <div class="callout warn"><span class="ic">⚠️</span>
+    <p>Si la API no arranca, casi siempre es el env: <code>JWT_SECRET</code> de menos de 32 caracteres o <code>DATABASE_URL</code> mal formado. La validación con Zod corta el boot y muestra el error en consola.</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<!-- ── 3 ── -->
+<section id="feature" class="reveal">
+  <div class="sec-head"><span class="idx">03</span><h2>Crear una feature</h2></div>
+
+  <div class="codeblock">
+    <div class="bar"><span class="fname">1 · rama desde master</span><button class="copy-btn" data-copy="git checkout master && git pull && git checkout -b feat/mi-feature">⧉ copiar</button></div>
+    <pre><span class="p">$</span> git checkout master <span class="p">&&</span> git pull
+<span class="p">$</span> git checkout -b <span class="s">feat/mi-feature</span>    <span class="c"># feat/ · fix/ · chore/</span></pre>
+  </div>
+
+  <p><strong>2 · Código.</strong> Copiá la estructura del módulo/feature más parecido:</p>
+  <ul class="plain">
+    <li><strong>API</strong> → módulo NestJS en <code>apps/api/src/&lt;dominio&gt;/</code> (module + controller + service + dto). Si tocás <code>schema.prisma</code>: <code>prisma:migrate</code> + <code>prisma:generate</code> y commiteá la migración.</li>
+    <li><strong>Web</strong> → carpeta en <code>apps/web/src/features/</code> con página, hooks de React Query y primitivas de <code>components/ui</code>. Ruta en <code>routes/router.tsx</code>.</li>
+  </ul>
+
+  <div class="codeblock">
+    <div class="bar"><span class="fname">3 · checks (no hay CI: esto es el gate)</span><button class="copy-btn" data-copy="npm run lint && npm run typecheck && npm run test">⧉ copiar</button></div>
+    <pre><span class="p">$</span> npm run lint <span class="p">&&</span> npm run typecheck <span class="p">&&</span> npm run test</pre>
+  </div>
+
+  <div class="codeblock">
+    <div class="bar"><span class="fname">4 · commit + push + PR</span><button class="copy-btn" data-copy='git push -u origin feat/mi-feature && gh pr create --base master --title "feat(api): mi feature" --body "## Qué cambia ... ## Cómo probar ..."'>⧉ copiar</button></div>
+    <pre><span class="p">$</span> git commit -m <span class="s">"feat(api): add vaccines module"</span>   <span class="c"># Conventional Commits</span>
+<span class="p">$</span> git push -u origin feat/mi-feature
+<span class="p">$</span> gh pr create --base master \
+    --title <span class="s">"feat(api): add vaccines module"</span> \
+    --body  <span class="s">"## Qué cambia ... ## Cómo probar ..."</span></pre>
+  </div>
+
+  <div class="callout tip"><span class="ic">💡</span>
+    <p>Nada de secretos ni <code>.env</code> en el diff. Si agregás variables de entorno, actualizá los <code>.env.example</code> y <code>apps/api/src/config/env.ts</code>.</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<!-- ── 4 ── -->
+<section id="skill" class="reveal">
+  <div class="sec-head"><span class="idx">04</span><h2>Shipear con un skill</h2></div>
+
+  <div class="skill-box">
+    <h3>/ship-feature — el paso 3, automatizado</h3>
+    <p>El repo incluye un skill de Claude Code en <code>.claude/skills/ship-feature/</code> que hace todo el flujo de punta a punta: solo describís la feature.</p>
+
+    <div class="flow">
+      <span class="fnode">rama desde master</span><span class="farrow">→</span>
+      <span class="fnode">implementa con los patrones del repo</span><span class="farrow">→</span>
+      <span class="fnode">lint + typecheck + tests</span><span class="farrow">→</span>
+      <span class="fnode">commit convencional</span><span class="farrow">→</span>
+      <span class="fnode hot">push + PR</span>
+    </div>
+
+    <div class="codeblock">
+      <div class="bar"><span class="fname">dentro de claude (en la raíz del repo)</span><button class="copy-btn" data-copy="/ship-feature módulo de vacunas: CRUD en la API + página en el dashboard">⧉ copiar</button></div>
+      <pre><span class="p">$</span> claude
+<span class="k">&gt;</span> /ship-feature <span class="s">módulo de vacunas: CRUD en la API + página en el dashboard</span></pre>
+    </div>
+
+    <ul class="plain">
+      <li>Corre los checks antes de commitear — si fallan, los arregla antes de pushear.</li>
+      <li>Arma el PR con secciones <strong>Qué cambia</strong> y <strong>Cómo probar</strong> (con usuario seed incluido).</li>
+      <li>Al final te reporta rama, URL del PR y decisiones que tomó.</li>
+    </ul>
+  </div>
+
+  <div class="callout tip"><span class="ic">🔑</span>
+    <p>Requisitos: tener <a href="https://docs.anthropic.com/claude-code" style="color:var(--green)">Claude Code</a> instalado y <code>gh</code> autenticado (<code>gh auth login</code>). El skill se carga solo al abrir <code>claude</code> en el repo.</p>
+  </div>
+  <a class="top" href="#top">↑ volver al índice</a>
+</section>
+
+<footer>
+  <span>MascotApp · quickstart 🐾</span>
+  <span>¿Más detalle? → <a href="onboarding.html">guía completa de onboarding</a></span>
+</footer>
+
+</div>
+
+<script>
+/* copy buttons */
+document.querySelectorAll(".copy-btn").forEach(btn=>{
+  btn.addEventListener("click",async()=>{
+    try{await navigator.clipboard.writeText(btn.dataset.copy);}
+    catch(e){
+      const ta=document.createElement("textarea");ta.value=btn.dataset.copy;
+      document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();
+    }
+    const prev=btn.textContent;btn.textContent="✓ copiado";btn.classList.add("ok");
+    setTimeout(()=>{btn.textContent=prev;btn.classList.remove("ok");},1500);
+  });
+});
+/* tabs */
+document.querySelectorAll(".tabs").forEach(tabs=>{
+  tabs.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      tabs.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      tabs.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      tabs.querySelector("#"+btn.dataset.tab).classList.add("active");
+    });
+  });
+});
+/* reveal */
+const rev=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rev.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll(".reveal").forEach(el=>rev.observe(el));
+</script>
+</body>
+</html>
